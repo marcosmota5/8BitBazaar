@@ -131,7 +131,10 @@ main {
     background-size: cover;
     background-position: center;
     text-align: center;
-    align-content: center;
+  display: flex; /* Add this */
+  flex-direction: column;
+    justify-content: center; /* Add this */
+    align-items: center; /* Add this */
 }
 
 .welcome-title {
