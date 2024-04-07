@@ -63,7 +63,6 @@ nav {
     display: flex;
     justify-content: right;
     position: relative;
-    /* Added position relative */
 }
 
 .shopping-cart a {
@@ -78,22 +77,17 @@ nav {
 
 .shopping-cart a::after {
     content: attr(data-count);
-    /* Adding content from data attribute */
     position: absolute;
     top: 0;
     right: 0;
     background-color: darkcyan;
-    /* Change color as per your preference */
     color: white;
-    /* Change color as per your preference */
     border-radius: 50%;
     font-weight: bold;
     padding: 5px;
     font-size: 8px;
     width: 5px;
-    /* Set width and height to the same value */
     height: 5px;
-    /* Set width and height to the same value */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -102,7 +96,6 @@ nav {
 .shopping-cart a[data-count="0"]::after,
 .shopping-cart a[data-count=""]::after {
     display: none;
-    /* Hide the circle if data-count is 0 or blank */
 }
 
 .shopping-cart a:hover {
@@ -131,10 +124,10 @@ main {
     background-size: cover;
     background-position: center;
     text-align: center;
-  display: flex; /* Add this */
+  display: flex;
   flex-direction: column;
-    justify-content: center; /* Add this */
-    align-items: center; /* Add this */
+    justify-content: center;
+    align-items: center;
 }
 
 .welcome-title {
@@ -159,9 +152,7 @@ main {
     margin-top: 50px;
     position: relative;
     width: 246px;
-    /* set the width of the card */
     font-family: Arial, sans-serif;
-    /* example font */
     overflow: hidden;
     display: inline-block;
     cursor: pointer;
@@ -170,13 +161,11 @@ main {
 .card-image {
     width: 100%;
     display: block;
-    /* to remove bottom space under the image */
     transition: transform 0.3s ease;
 }
 
 .card-image:hover {
     transform: scale(1.1);
-    /* Scales the image to 110% of its original size */
 }
 
 .card-content {
@@ -185,29 +174,20 @@ main {
     left: 0;
     right: 0;
     background: rgba(71, 71, 71, 0.7);
-    /* semi-transparent white background */
     color: white;
-    /* dark text color */
     padding: 20px;
-    /* spacing inside the content area */
     text-align: left;
-    /* align text to the left */
 }
 
 .card-title {
     margin: 0 0 5px 0;
-    /* remove default margin and set spacing between title and subtitle */
     font-size: 1.2em;
-    /* larger text for the title */
     font-weight: bold;
-    /* bold text for the title */
 }
 
 .card-subtitle {
     margin: 0;
-    /* remove default margin */
     font-size: 0.9em;
-    /* smaller text for the subtitle */
 }
 
 .description2 {
@@ -246,9 +226,7 @@ main {
     position: absolute;
     top: 0;
     right: 0;
-    /* Set the size of the hot deal image as needed */
     width: 32px;
-    /* Adjust as needed */
     height: auto;
 }
 
@@ -261,7 +239,6 @@ main {
 
 .product-image:hover {
     transform: scale(1.1);
-    /* Scales the image to 110% of its original size */
 }
 
 .product-detail {
@@ -389,11 +366,9 @@ footer {
     background-color: #555;
 }
 
-/* Hamburger menu styles */
 .menu-toggle {
     display: none;
     z-index: 9999;
-    /* Hide toggle by default */
 }
 
 .menu-toggle span {
@@ -402,26 +377,23 @@ footer {
     border-radius: 4px;
     margin-right: 10px;
     background-color: white;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add shadow effect */
-    transition: box-shadow 0.3s ease; /* Add transition for smooth effect */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
 }
 
 .menu-toggle span:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Change shadow effect on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .overlay-menu {
     display: none;
-    /* Hide overlay menu by default */
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    /* Semi-transparent background */
+    background-color: rgba(0, 0, 0, 0.85);
     z-index: 2000;
-    /* Ensure it appears above other content */
 }
 
 .overlay-menu a {
@@ -438,7 +410,6 @@ footer {
 
 .overlay-menu a:hover {
     background-color: rgba(255, 255, 255, 0.1);
-    /* Lighten background on hover */
 }
 
 /* Media query for small screens */
@@ -446,18 +417,15 @@ footer {
 
     .options {
         display: none;
-        /* Hide options on small screens */
     }
 
     .menu-toggle {
         display: block;
-        /* Show toggle button on small screens */
         cursor: pointer;
     }
 
     .menu-toggle.open+.overlay-menu {
         display: block;
-        /* Show options when the hamburger menu is clicked */
     }
 
     .featured-deals {
@@ -465,10 +433,7 @@ footer {
         flex-direction: column;
     }
 
-
-    /* Adjust styles for hamburger menu */
     .menu-toggle span {
         font-size: 24px;
-        /* Adjust font size */
     }
 }

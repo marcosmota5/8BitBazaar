@@ -20,7 +20,7 @@ body {
 
 .product-image-wrapper {
   flex: 0 0 auto;
-  width: 20%; /* You can adjust the percentage as you like */
+  width: 20%;
   position: relative;
 }
 
@@ -33,8 +33,7 @@ body {
   position: absolute;
   top: 0;
   right: 0;
-  /* Set the size of the hot deal image as needed */
-  width: 32px; /* Adjust as needed */
+  width: 32px;
   height: auto;
 }
 

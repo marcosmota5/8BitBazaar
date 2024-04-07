@@ -23,7 +23,7 @@ body {
 
 .cart-items {
     display: flex;
-    flex-direction: column; /* Change to column */
+    flex-direction: column;
     justify-content: space-evenly;
     border-color: gray;
     margin: 10px;
@@ -31,7 +31,7 @@ body {
 
 .cart-item {
     display: flex;
-    flex-direction: row; /* This should be row for elements inside cart-item */
+    flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
     border-top: 1px solid #dedede;

@@ -83,7 +83,7 @@
                 <label for="postal-code">Postal Code<span class="required">*</span></label>
                 <input class="input-box" type="text" id="postal-code" name="postal-code" required><br>
             </div>
-            <!-- A div that holds the buttons to navigate to the previous page of the form and to submit the form. The actual submit input is hidden and a button is used instead that has the onclick element to click on the input submit, the reason
+            <!-- A div that holds the button to submit the form. The actual submit input is hidden and a button is used instead that has the onclick element to click on the input submit, the reason
                              for that is to enable better formatting and controls -->
             <div class="form-container">
                 <button class="submit-button" type="button" onclick="document.getElementById('submit-btn').click()"><span class="material-symbols-outlined">

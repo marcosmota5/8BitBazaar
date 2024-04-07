@@ -30,10 +30,11 @@
             <p>This is a website for an assignment and only for learning purposes.</p>
             <br>
             <p>Assignment detail: COMP 1002 Project 1</p>
+            <p>GitHub repository: <a href="https://github.com/marcosmota5/8BitBazaar" title="GitHub Repository">8 Bit Bazaar Repository</a></p>
             <br>
             <h3>Students:</h3>
             <div class="students-section">
-                <!-- Repeat this div for each student -->
+                <!-- Divs for students -->
                 <div class="student-card">
                     <img src="https://media.licdn.com/dms/image/D5603AQELgygHhF3mwQ/profile-displayphoto-shrink_800_800/0/1711475513223?e=1717027200&v=beta&t=nVGGvmDL5uUeCKEbSKoOweNDBfUQ0rzTm8rtFyEsgCA" alt="Student Picture">
                     <div class="student-card-content">
@@ -62,7 +63,6 @@
                         <p class="student-id">Id: 200584471</p>
                     </div>
                 </div>
-                <!-- ... more student cards ... -->
             </div>
             <br>
             <p>Thanks to the creators of the following images:</p>

@@ -29,7 +29,7 @@
         <span id="menu-icon" class="material-symbols-outlined">menu</span>
     </div>
     <div class="overlay-menu">
-        <!-- Your menu options go here -->
+        <!-- Menu options -->
         <a class="first" href="index.php"><span class="material-symbols-outlined">
                 home
             </span>&nbsp;Home</a>
