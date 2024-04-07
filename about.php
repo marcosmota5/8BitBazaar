@@ -40,6 +40,8 @@
                     <div class="student-card-content">
                         <h3>Marcos Oliveira Mota</h3>
                         <p class="student-id">Id: 200564426</p>
+                        <p>Portfolio: <a href="https://www.marcosmota.tech/portfolio">marcosmota.tech</a></p>
+                        <p>Follow Me: <a href="https://www.linkedin.com/in/marcosmota5">LinkedIn</a></p>
                     </div>
                 </div>
                 <div class="student-card">
@@ -47,6 +49,8 @@
                     <div class="student-card-content">
                         <h3>Chun-Che Wu</h3>
                         <p class="student-id">Id: 200575229</p>
+                        <p>Portfolio:</p>
+                        <p>Follow Me:</p>
                     </div>
                 </div>
                 <div class="student-card">
@@ -54,6 +58,8 @@
                     <div class="student-card-content">
                         <h3>Renuka Rijal</h3>
                         <p class="student-id">Id: 200584442</p>
+                        <p>Portfolio:</p>
+                        <p>Follow Me:</p>
                     </div>
                 </div>
                 <div class="student-card">
@@ -61,6 +67,8 @@
                     <div class="student-card-content">
                         <h3>Sukhwinder Kaur</h3>
                         <p class="student-id">Id: 200584471</p>
+                        <p>Portfolio:</p>
+                        <p>Follow Me:</p>
                     </div>
                 </div>
             </div>
