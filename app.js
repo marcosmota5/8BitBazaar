@@ -33,6 +33,11 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
+// Register Handlebars helpers
+hbs.registerHelper('eq', function (a, b) {
+  return a === b;
+});
+
 hbs.registerHelper('calcDiscount', (price, discount) => {
   return (price * (1 - discount)).toFixed(2);
 });

@@ -1,7 +1,167 @@
-<h1>Register</h1>
-<form action="/register" method="POST">
-  <input type="text" name="username" placeholder="Username" required>
-  <input type="password" name="password" placeholder="Password" required>
-  <button type="submit">Register</button>
-</form>
-<a href="/login">Already have an account? Login</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Register | 8 Bit Bazaar</title>
+    <meta name="description" content="Website of old products">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/style-register.css" />
+    <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+</head>
+<body>
+    {{> header }}
+
+    <main class="main-content-register">
+        <form action="/register" method="POST" enctype="multipart/form-data">
+            <div class="form-header">
+                <h2>Register</h2>
+                <button class="reset-button" type="reset">
+                    <span class="material-symbols-outlined">delete</span>&nbsp;Clear
+                </button>
+            </div>
+
+            <div class="form-field-group">
+                <div class="form-field">
+                    <label for="first-name">First name<span class="required">*</span></label>
+                    <input class="input-box" type="text" id="first-name" name="firstName" maxlength="30" value="{{firstName}}" required>
+                </div>
+                <div class="form-field">
+                    <label for="last-name">Last name<span class="required">*</span></label>
+                    <input class="input-box" type="text" id="last-name" name="lastName" maxlength="30" value="{{lastName}}" required>
+                </div>
+            </div>
+
+            <div class="form-field-group">
+                <div class="form-field">
+                    <label for="birth-date">Birth date<span class="required">*</span></label>
+                    <input class="input-box" type="date" id="birth-date" name="birthDate" min="1900-01-01" value="{{birthDate}}" required>
+                </div>
+                <div class="form-field">
+                    <label for="sex">Sex<span class="required">*</span></label>
+                    <select class="input-box" id="sex" name="sex" required>
+                        <option value="M" {{#if (eq sex "M")}}selected{{/if}}>Male</option>
+                        <option value="F" {{#if (eq sex "F")}}selected{{/if}}>Female</option>
+                        <option value="N" {{#if (eq sex "N")}}selected{{/if}}>Not declared</option>
+                    </select>
+                </div>
+                <div class="form-field">
+                    <label for="profile-picture">Profile picture</label>
+                    <div class="user-image-selector">
+                        <img id="image-preview" src="/images/users/no-picture.png" alt="Image Preview">
+                        <input type="file" id="profile-picture" name="profilePicture" accept="image/*">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-field-group">
+                <div class="form-field">
+                    <label for="phone-number">Phone Number<span class="required">*</span></label>
+                    <input class="input-box" type="tel" id="phone-number" name="phoneNumber" maxlength="20" value="{{phoneNumber}}" required>
+                </div>
+                <div class="form-field">
+                    <label for="email">Email<span class="required">*</span></label>
+                    <input class="input-box" type="email" id="email" name="email" maxlength="50" value="{{email}}" required>
+                </div>
+            </div>
+
+            <div class="form-field-group">
+                <div class="form-field">
+                    <label for="address-line-1">Address line 1<span class="required">*</span></label>
+                    <input class="input-box" type="text" id="address-line-1" name="addressLine1" maxlength="100" value="{{addressLine1}}" required>
+                </div>
+            </div>
+
+            <div class="form-field-group">
+                <div class="form-field">
+                    <label for="address-line-2">Address line 2</label>
+                    <input class="input-box" type="text" id="address-line-2" name="addressLine2" maxlength="100" value="{{addressLine2}}">
+                </div>
+                <div class="form-field">
+                    <label for="postal-code">Postal Code<span class="required">*</span></label>
+                    <input class="input-box" type="text" id="postal-code" name="postalCode" maxlength="20" value="{{postalCode}}" required>
+                </div>
+            </div>
+
+            <div class="form-field-group">
+                <div class="form-field">
+                    <label for="country">Country<span class="required">*</span></label>
+                    <select class="input-box" id="country" name="country" required>
+                        <option value="Canada" selected>Canada</option>
+                    </select>
+                </div>
+                <div class="form-field">
+                    <label for="province">Province<span class="required">*</span></label>
+                    <select class="input-box" id="province" name="province" required>
+                        {{#each provinces}}
+                            <option value="{{this}}" {{#if (eq ../province this)}}selected{{/if}}>{{this}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                <div class="form-field">
+                    <label for="city">City<span class="required">*</span></label>
+                    <input class="input-box" type="text" id="city" name="city" value="{{city}}" required>
+                </div>
+            </div>
+
+            <div class="form-field-group">
+                <div class="form-field">
+                    <label for="password">Password<span class="required">*</span></label>
+                    <input class="input-box" type="password" id="password" name="password" maxlength="32" required>
+                </div>
+                <div class="form-field">
+                    <label for="confirm-password">Confirm Password<span class="required">*</span></label>
+                    <input class="input-box" type="password" id="confirm-password" name="confirmPassword" maxlength="32" required>
+                </div>
+            </div>
+
+            {{#if error}}
+            <div class="form-field-group">
+                <div class="error-message">
+                    <strong>Error to register user:<br><br></strong>{{error}}
+                </div>
+            </div>
+            {{/if}}
+
+            <div class="form-container">
+                <button class="submit-button" type="submit">
+                    <span class="material-symbols-outlined">how_to_reg</span>&nbsp;Register
+                </button>
+            </div>
+        </form>
+    </main>
+
+    {{> footer }}
+
+    <script src="/scripts/scripts.js"></script>
+    <script>
+        // Limit birthdate to at least 10 years ago
+        document.addEventListener("DOMContentLoaded", function () {
+            const today = new Date();
+            const yyyy = today.getFullYear() - 10;
+            const mm = String(today.getMonth() + 1).padStart(2, '0');
+            const dd = String(today.getDate()).padStart(2, '0');
+            document.getElementById('birth-date').setAttribute('max', `${yyyy}-${mm}-${dd}`);
+        });
+
+        // Preview image upload
+        document.getElementById('profile-picture').addEventListener('change', function (event) {
+            const file = event.target.files[0];
+            if (file && file.type.startsWith('image/') && file.size <= 5 * 1024 * 1024) {
+                const reader = new FileReader();
+                reader.onload = e => document.getElementById('image-preview').src = e.target.result;
+                reader.readAsDataURL(file);
+            } else {
+                alert('Invalid file. Please upload an image under 5MB.');
+                event.target.value = '';
+            }
+        });
+    </script>
+</body>
+</html>
