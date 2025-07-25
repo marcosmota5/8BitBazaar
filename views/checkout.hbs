@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Checkout | 8 Bit Bazaar</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/style-register.css" />
+    <link rel="shortcut icon" href="/images/favicon.png" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+</head>
+<body>
+    {{> header}}
+
+    <main class="main-content-checkout">
+        <h1 class="checkout-title">Checkout</h1>
+        <form action="/checkout" method="POST">
+            <div class="form-header">
+                <h2>Contact Information</h2>
+                <button class="reset-button" type="button" onclick="document.getElementById('reset-btn').click()">
+                    <span class="material-symbols-outlined">restart_alt</span>&nbsp;Reset
+                </button>
+                <input style="display:none" type="reset" id="reset-btn" onclick="return confirm('Reset the form?')">
+            </div>
+
+            <div class="form-field-group">
+                <div class="form-field">
+                    <label for="name">Recipient name<span class="required">*</span></label>
+                    <input class="input-box" type="text" id="name" name="name" value="{{user.first_name}} {{user.last_name}}" required>
+                </div>
+                <div class="form-field">
+                    <label for="phone-number">Phone Number<span class="required">*</span></label>
+                    <input class="input-box" type="tel" id="phone-number" name="phone-number" value="{{user.phone_number}}" required>
+                </div>
+            </div>
+
+            <div class="form-field-group">
+                <div class="form-field">
+                    <label for="address-line-1">Address line 1<span class="required">*</span></label>
+                    <input class="input-box" type="text" id="address-line-1" name="address-line-1" value="{{user.address_line_1}}" required>
+                </div>
+            </div>
+
+            <div class="form-field-group">
+                <div class="form-field">
+                    <label for="address-line-2">Address line 2</label>
+                    <input class="input-box" type="text" id="address-line-2" name="address-line-2" value="{{user.address_line_2}}">
+                </div>
+                <div class="form-field">
+                    <label for="postal-code">Postal Code<span class="required">*</span></label>
+                    <input class="input-box" type="text" id="postal-code" name="postal-code" value="{{user.postal_code}}" required>
+                </div>
+            </div>
+
+            <div class="form-field-group">
+                <div class="form-field">
+                    <label for="country">Country<span class="required">*</span></label>
+                    <select class="input-box" id="country" name="country" required>
+                        <option value="Canada" {{#if (eq user.country "Canada")}}selected{{/if}}>Canada</option>
+                    </select>
+                </div>
+                <div class="form-field">
+                    <label for="province">Province<span class="required">*</span></label>
+                    <select class="input-box" id="province" name="province" required>
+                        {{#each provinces}}
+                            <option value="{{this}}" {{#if (eq ../user.state_province this)}}selected{{/if}}>{{this}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                <div class="form-field">
+                    <label for="city">City<span class="required">*</span></label>
+                    <input class="input-box" type="text" id="city" name="city" value="{{user.city}}" required>
+                </div>
+            </div>
+
+            <div class="form-field-group">
+                <input type="hidden" id="product_ids" name="product_ids" value="{{product_ids}}">
+                <input type="hidden" id="quantities" name="quantities" value="{{quantities}}">
+                <input type="hidden" id="total" name="total" value="{{total}}">
+                <div class="form-field">
+                    <h2 class="cart-total">Total: <span id="total-value">$ {{total}}</span></h2>
+                </div>
+            </div>
+
+            <div class="form-container">
+                <button class="submit-button" type="button" onclick="document.getElementById('submit-btn').click()">
+                    <span class="material-symbols-outlined">done</span>&nbsp;Confirm
+                </button>
+                <input style="display:none" type="submit" id="submit-btn">
+            </div>
+        </form>
+    </main>
+
+    {{> footer}}
+    <script src="/js/scripts.js"></script>
+</body>
+</html>
