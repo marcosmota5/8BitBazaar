@@ -1,2 +1,127 @@
-<h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Home | 8 Bit Bazaar</title>
+    <meta name="description" content="Website of old products">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    {{> header }}
+
+    <main>
+        <div class="welcome">
+            <span class="welcome-title">Welcome to 8 Bit Bazaar!</span>
+            <span class="welcome-subtitle">Here you can find everything you love from old times.</span>
+        </div>
+
+        <div class="cards">
+            <div class="card">
+                <img src="/images/Cul-ars-vidgames-954038980.webp" alt="img" class="card-image">
+                <div class="card-content">
+                    <h2 class="card-title">RETRO RAID</h2>
+                    <p class="card-subtitle">Level up your collection!</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="/images/y2ZOW9.png" alt="img" class="card-image">
+                <div class="card-content">
+                    <h2 class="card-title">VINTAGE QUEST</h2>
+                    <p class="card-subtitle">Discover classic adventures!</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="/images/metroid.webp" alt="img" class="card-image">
+                <div class="card-content">
+                    <h2 class="card-title">GAME LEGACY</h2>
+                    <p class="card-subtitle">Get the icons of history!</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="description2">
+            <div class="description2-element-1">
+                <span class="material-symbols-outlined">local_shipping</span>
+                <span>
+                    <h3>Free Shipping</h3>
+                    <p>Free shipping on all orders</p>
+                </span>
+            </div>
+            <div class="description2-element-2">
+                <span class="material-symbols-outlined">support_agent</span>
+                <span>
+                    <h3>Support 24/7</h3>
+                    <p>Support 24 hours a day</p>
+                </span>
+            </div>
+            <div class="description2-element-3">
+                <span class="material-symbols-outlined">replay</span>
+                <span>
+                    <h3>30 Days Returns</h3>
+                    <p>30 days free returns</p>
+                </span>
+            </div>
+            <div class="description2-element-3">
+                <span class="material-symbols-outlined">star</span>
+                <span>
+                    <h3>High Quality</h3>
+                    <p>Best quality products</p>
+                </span>
+            </div>
+        </div>
+
+        {{#if featuredProducts.length}}
+            <h2 class="featured-deals-title">Featured Deals</h2>
+            <div class="featured-deals">
+                {{#each featuredProducts}}
+                    <div class="product" id="{{this.code}}">
+                        <div class="product-image-container">
+                            <img class="product-image" src="{{this.picture_path}}" alt="Product Image">
+                            <img src="/images/hot-deal.png" alt="Hot Deal" class="hot-deal">
+                        </div>
+                        <div class="product-detail">
+                            <span class="product-title">{{this.name}}</span>
+                            <div class="product-price">
+                                <span class="product-price-old">${{this.price}}</span>
+                                <span class="product-price-new">${{this.discountedPrice}}</span>
+                            </div>
+                            <span class="product-quantity">Quantity: {{this.quantity_in_stock}}</span>
+                            <button class="add-to-cart-btn" onclick="addToCart('{{this.code}}')">Add to cart</button>
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+        {{/if}}
+
+        <div class="newsletter">
+            <h2>Newsletter</h2>
+            <p>Subscribe to our newsletter to receive the last deals</p>
+            <form action="/subscribe" method="get">
+                <label class="input-label" for="emailAddress">Email</label>
+                <input class="input-box" type="email" name="emailAddress" id="emailAddress" required />
+                <button class="input-button" type="submit">Subscribe</button>
+            </form>
+        </div>
+
+        <!-- Footer -->
+        {{> footer}}
+    </main>
+
+    <script src="/js/scripts.js"></script>
+    {{#if toastrMessage}}
+        <script>
+            toastr.success('{{toastrMessage}}', 'Success');
+        </script>
+    {{/if}}
+</body>
+</html>

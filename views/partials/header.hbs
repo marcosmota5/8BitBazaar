@@ -1,0 +1,85 @@
+<nav>
+    <!-- Logo -->
+    <div class="logo" onclick="window.location.href='/'">
+        <img src="/images/favicon.png" alt="Company Logo">
+        <span class="company-name">8 Bit Bazaar</span>
+    </div>
+
+    <!-- Navigation options -->
+    <div class="options">
+        <a href="/"><span class="material-symbols-outlined">home</span>&nbsp;Home</a>
+        <a href="/deals"><span class="material-symbols-outlined">sell</span>&nbsp;Deals</a>
+        <a href="/products"><span class="material-symbols-outlined">storefront</span>&nbsp;Products</a>
+        {{#if currentUser}}
+            <a href="/orders"><span class="material-symbols-outlined">list_alt</span>&nbsp;My orders</a>
+        {{/if}}
+        <a href="/contact"><span class="material-symbols-outlined">phone</span>&nbsp;Contact</a>
+        <a href="/about"><span class="material-symbols-outlined">info</span>&nbsp;About</a>
+    </div>
+
+    <!-- User & Cart -->
+    <div class="user-and-shopping-cart">
+        {{#if currentUser}}
+            <div class="user-mini-info">
+                <a href="#" id="user-mini-info">
+                    <img src="{{#if currentUser.picture_path}}{{currentUser.picture_path}}{{else}}/images/users/no-picture.png{{/if}}" alt="User Picture">
+                    &nbsp;<span class="user-mini-info-text">{{currentUser.first_name}}</span>
+                    <span class="material-symbols-outlined">arrow_drop_down</span>
+                </a>
+                <div id="user-popup" class="user-popup-content">
+                    <div class="profile-and-logout">
+                        <a href="/profile"><span class="material-symbols-outlined">user_attributes</span>&nbsp;My profile</a>
+                        <a href="/logout" class="logout-popup-button"><span class="material-symbols-outlined">logout</span><span>&nbsp;Logout</span></a>
+                    </div>
+                    <div class="picture-and-details">
+                        <div class="picture">
+                            <img src="{{#if currentUser.picture_path}}{{currentUser.picture_path}}{{else}}/images/users/no-picture.png{{/if}}" alt="User Picture">
+                        </div>
+                        <div class="details">
+                            <div><span class="material-symbols-outlined">person</span>&nbsp;{{currentUser.first_name}} {{currentUser.last_name}}</div>
+                            <div><span class="material-symbols-outlined">phone</span>&nbsp;{{currentUser.phone_number}}</div>
+                            <div><span class="material-symbols-outlined">email</span>&nbsp;{{currentUser.email}}</div>
+                        </div>
+                    </div>
+                    <div class="change-password">
+                        <a href="/change-password"><span class="material-symbols-outlined">lock_reset</span>&nbsp;Change password</a>
+                    </div>
+                </div>
+            </div>
+        {{else}}
+            <div class="user-sign-in-up">
+                <a href="#" id="sign-in-up">
+                    <span class="material-symbols-outlined">person</span>&nbsp;Sign in/up
+                    <span class="material-symbols-outlined">arrow_drop_down</span>
+                </a>
+                <div id="sign-in-up-popup" class="sign-in-up-popup-content">
+                    <span>Already an user?</span>
+                    <a href="/login" class="login-popup-button"><span>Login</span></a>
+                    <div class="section-divider"></div>
+                    <span>Not an user yet?</span>
+                    <a href="/register" class="register-popup-button"><span>Register</span></a>
+                </div>
+            </div>
+        {{/if}}
+
+        <div class="shopping-cart">
+            <a href="/cart" id="cart">
+                <span class="material-symbols-outlined">shopping_cart</span>&nbsp;<span class="cart-text">Cart</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="menu-toggle">
+        <span id="menu-icon" class="material-symbols-outlined">menu</span>
+    </div>
+    <div class="overlay-menu">
+        <a class="first" href="/"><span class="material-symbols-outlined">home</span>&nbsp;Home</a>
+        <a href="/deals"><span class="material-symbols-outlined">sell</span>&nbsp;Deals</a>
+        <a href="/products"><span class="material-symbols-outlined">storefront</span>&nbsp;Products</a>
+        {{#if currentUser}}
+            <a href="/orders"><span class="material-symbols-outlined">list_alt</span>&nbsp;My orders</a>
+        {{/if}}
+        <a href="/contact"><span class="material-symbols-outlined">phone</span>&nbsp;Contact</a>
+        <a href="/about"><span class="material-symbols-outlined">info</span>&nbsp;About</a>
+    </div>
+</nav>
