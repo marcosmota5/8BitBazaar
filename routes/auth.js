@@ -2,6 +2,15 @@ const express = require('express');
 const passport = require('passport');
 const User = require('../models/User');
 const router = express.Router();
+const multer = require('multer');
+const path = require('path');
+
+// Multer setup for file uploads
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => cb(null, 'public/images/users/'),
+  filename: (req, file, cb) => cb(null, `${req.user._id}_${Date.now()}${path.extname(file.originalname)}`)
+});
+const upload = multer({ storage });
 
 // Register page
 router.get('/register', (req, res) => res.render('auth/register'));
@@ -49,14 +58,32 @@ router.get('/profile', (req, res) => {
   res.render('auth/profile', { user: req.user });
 });
 
-// Save profile changes
-router.post('/profile', async (req, res) => {
+// Save full profile changes
+router.post('/profile', upload.single('profile-picture'), async (req, res) => {
+  if (!req.isAuthenticated()) return res.redirect('/login');
   try {
-    const { username } = req.body;
-    await User.findByIdAndUpdate(req.user._id, { username });
+    const updateData = {
+      first_name: req.body['first-name'],
+      last_name: req.body['last-name'],
+      birth_date: req.body['birth-date'],
+      sex: req.body.sex,
+      phone_number: req.body['phone-number'],
+      email: req.body.email,
+      address_line_1: req.body['address-line-1'],
+      address_line_2: req.body['address-line-2'],
+      postal_code: req.body['postal-code'],
+      country: req.body.country,
+      state_province: req.body.province,
+      city: req.body.city
+    };
+    if (req.file) updateData.picture_path = `/images/users/${req.file.filename}`;
+    await User.findByIdAndUpdate(req.user._id, updateData);
+    req.flash('success', 'Profile updated successfully!');
     res.redirect('/profile');
   } catch (err) {
-    res.send('Error updating profile: ' + err.message);
+    console.error(err);
+    req.flash('error', 'Error updating profile.');
+    res.redirect('/profile');
   }
 });
 
