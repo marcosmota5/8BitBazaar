@@ -47,6 +47,13 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+const flash = require('connect-flash');
+app.use(flash());
+app.use((req, res, next) => {
+  res.locals.error = req.flash('error'); // makes error messages available to templates
+  next();
+});
+
 app.use((req, res, next) => {
   res.locals.currentUser = req.user || null;
   next();

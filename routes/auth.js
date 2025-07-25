@@ -14,11 +14,19 @@ router.post('/register', async (req, res) => {
   }
 });
 
-// Login page
-router.get('/login', (req, res) => res.render('auth/login'));
+router.get('/login', (req, res) => {
+  res.render('auth/login', { error: req.flash('error') });
+});
+
+// POST login with flash error messages
 router.post('/login',
-  passport.authenticate('local', { failureRedirect: '/login' }),
-  (req, res) => res.redirect('/products')
+  passport.authenticate('local', {
+    failureRedirect: '/login',
+    failureFlash: 'Invalid email or password'
+  }),
+  (req, res) => {
+    res.redirect('/products'); // redirect after successful login
+  }
 );
 
 // Logout

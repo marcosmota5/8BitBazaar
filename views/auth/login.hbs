@@ -1,7 +1,63 @@
-<h1>Login</h1>
-<form action="/login" method="POST">
-  <input type="text" name="username" placeholder="Username" required>
-  <input type="password" name="password" placeholder="Password" required>
-  <button type="submit">Login</button>
-</form>
-<a href="/auth/github">Login with GitHub</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Login | 8 Bit Bazaar</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/style-register.css" />
+    <link rel="shortcut icon" href="/images/favicon.png" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+</head>
+<body>
+    {{> header}}
+
+    <main class="main-content-register">
+        <form action="/login" method="POST">
+            <div class="form-header">
+                <h2>Login</h2>
+                <button class="reset-button" type="button" onclick="document.getElementById('reset-btn').click()">
+                    <span class="material-symbols-outlined">delete</span>&nbsp;Clear
+                </button>
+                <input style="display:none" type="reset" id="reset-btn">
+            </div>
+
+            <div class="form-field-group">
+                <div class="form-field">
+                    <label for="email">Email<span class="required">*</span></label>
+                    <input class="input-box" type="email" name="username" id="email" maxlength="50" required />
+                </div>
+            </div>
+            <div class="form-field-group">
+                <div class="form-field">
+                    <label for="password">Password<span class="required">*</span></label>
+                    <input class="input-box" type="password" name="password" id="password" maxlength="32" required>
+                </div>
+            </div>
+
+            {{#if error}}
+                <div class="form-field-group">
+                    <div class="error-message">
+                        <span><strong>{{error}}</strong></span>
+                    </div>
+                </div>
+            {{/if}}
+
+            <div class="form-container">
+                <button class="submit-button" type="submit">
+                    <span class="material-symbols-outlined">login</span>&nbsp;Login
+                </button>
+                <a class="submit-button" href="/register"><span>Register</span></a>
+            </div>
+        </form>
+
+        <div class="form-container" style="margin-top: 20px;">
+            <a class="submit-button" style="background-color:#24292f" href="/auth/github">
+                <span class="material-symbols-outlined">code</span>&nbsp;Login with GitHub
+            </a>
+        </div>
+    </main>
+
+    {{> footer}}
+</body>
+</html>

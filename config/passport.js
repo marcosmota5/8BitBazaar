@@ -25,13 +25,30 @@ passport.use(new GitHubStrategy({
   try {
     let user = await User.findOne({ githubId: profile.id });
     if (!user) {
-      user = await User.create({ username: profile.username, githubId: profile.id });
+      user = await User.create({
+        githubId: profile.id,
+        username: profile.username,
+        email: profile.emails && profile.emails[0] ? profile.emails[0].value : `${profile.username}@github.com`,
+        first_name: profile.displayName || profile.username,
+        last_name: '',
+        sex: 'N',
+        password: Math.random().toString(36).slice(-8), // random placeholder
+        register_date: new Date(),
+        birth_date: new Date('1970-01-01'), // placeholder
+        address_line_1: '',
+        postal_code: '',
+        city: '',
+        state_province: '',
+        country: '',
+        status: 'A'
+      });
     }
     return done(null, user);
   } catch (err) {
     return done(err);
   }
 }));
+
 
 // Serialize & Deserialize user
 passport.serializeUser((user, done) => {
