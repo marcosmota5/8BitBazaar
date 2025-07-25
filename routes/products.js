@@ -3,10 +3,18 @@ const router = express.Router();
 const Product = require('../models/Product');
 const ensureAuth = require('../middleware/auth');
 
-// Read (Public)
+// Products page
 router.get('/', async (req, res) => {
-  const products = await Product.find();
-  res.render('products/index', { products });
+  try {
+    const products = await Product.find({
+      status: 'A',
+      quantity_in_stock: { $gt: 0 }
+    }).lean();
+
+    res.render('products/index', { products, toastrMessage: req.flash('success') });
+  } catch (err) {
+    res.status(500).send('Error fetching products: ' + err.message);
+  }
 });
 
 // Create (Form)
