@@ -25,6 +25,7 @@ var changePasswordRouter = require('./routes/changePassword');
 var checkoutRouter = require('./routes/checkout');
 var contactRouter = require('./routes/contact');
 var dealsRouter = require('./routes/deals');
+var receiptRouter = require('./routes/receipt');
 
 var app = express();
 
@@ -65,6 +66,7 @@ app.use('/users', usersRouter);
 app.use('/products', productsRouter);
 app.use('/orders', ordersRouter);
 app.use('/about', aboutRouter);
+app.use('/receipt', receiptRouter);
 app.use('/', cartRouter);
 app.use('/', changePasswordRouter);
 app.use('/', checkoutRouter);

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Receipt | 8 Bit Bazaar</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/style-receipt.css" />
+  <link rel="shortcut icon" href="/images/favicon.png" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+</head>
+<body>
+  {{> header}}
+
+  <main class="main-content-receipt">
+    <div class="receipt">
+      <h2>8 Bit Bazaar</h2>
+      <br>
+      <h3>Your order has been received!</h3>
+      <p>Please, check the details below.</p>
+      <br><br>
+
+      <div class="receipt-details">
+        <h4>Order Details:</h4>
+        <ul>
+          <li>Date time of the order: {{order.order_date}}</li>
+          <li>Order number: {{order.code}}</li>
+        </ul>
+
+        <h4>Items:</h4>
+        <ul>
+          {{#each orderItems}}
+            <li>
+              {{product.name}}. 
+              Quantity: {{quantity}}. 
+              Value: <span class="price-new">$ {{price}}</span>. 
+              Total: <span class="price-new">$ {{total_price}}</span>
+            </li>
+          {{/each}}
+        </ul>
+
+        <h4>Total: <span id="total-value">$ {{order.total_amount}}</span></h4>
+
+        <h4>Contact Information:</h4>
+        <ul>
+          <li>Recipient name: {{order.recipient_name}}</li>
+          <li>Phone number: {{order.phone_number}}</li>
+          <li>Address line 1: {{order.address_line_1}}</li>
+          <li>Address line 2: {{order.address_line_2}}</li>
+          <li>Postal code: {{order.postal_code}}</li>
+          <li>Country: {{order.country}}</li>
+          <li>State/province: {{order.state_province}}</li>
+          <li>City: {{order.city}}</li>
+        </ul>
+        <br>
+      </div>
+      <p>Thank you for your order!</p>
+    </div>
+  </main>
+
+  {{> footer}}
+
+  <script src="/scripts/scripts.js"></script>
+</body>
+</html>
