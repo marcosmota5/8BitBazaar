@@ -76,7 +76,7 @@ router.post('/profile', upload.single('profile-picture'), async (req, res) => {
       state_province: req.body.province,
       city: req.body.city
     };
-    if (req.file) updateData.picture_path = `/images/users/${req.file.filename}`;
+    if (req.file) updateData.picturePath = `/images/users/${req.file.filename}`;
     await User.findByIdAndUpdate(req.user._id, updateData);
     req.flash('success', 'Profile updated successfully!');
     res.redirect('/profile');

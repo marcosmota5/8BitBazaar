@@ -6,17 +6,11 @@ router.get('/deals', async (req, res) => {
   try {
     const products = await Product.find({
       status: 'A',
-      quantity_in_stock: { $gt: 0 },
-      is_deal: true
+      quantityInStock: { $gt: 0 },
+      isDeal: 1
     }).lean();
 
-    const formattedProducts = products.map(p => ({
-      ...p,
-      discountedPrice: (p.price * (1 - p.discount)).toFixed(2),
-      roundedPrice: p.price.toFixed(2)
-    }));
-
-    res.render('deals', { products: formattedProducts });
+    res.render('deals', { products: products });
   } catch (err) {
     console.error(err);
     res.status(500).send('Error loading deals');

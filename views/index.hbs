@@ -80,23 +80,23 @@
             </div>
         </div>
 
-        {{#if featuredProducts.length}}
+        {{#if products.length}}
             <h2 class="featured-deals-title">Featured Deals</h2>
             <div class="featured-deals">
-                {{#each featuredProducts}}
-                    <div class="product" id="{{this.code}}">
+                {{#each products}}
+                    <div class="product" id="{{code}}">
                         <div class="product-image-container">
-                            <img class="product-image" src="{{this.picture_path}}" alt="Product Image">
+                            <img class="product-image" src="{{picturePath}}" alt="Product Image">
                             <img src="/images/hot-deal.png" alt="Hot Deal" class="hot-deal">
                         </div>
                         <div class="product-detail">
-                            <span class="product-title">{{this.name}}</span>
+                            <span class="product-title">{{name}}</span>
                             <div class="product-price">
-                                <span class="product-price-old">${{this.price}}</span>
-                                <span class="product-price-new">${{this.discountedPrice}}</span>
+                                <span class="product-price-old">${{price}}</span>
+                                <span class="product-price-new">${{calcDiscount price discount}}</span>
                             </div>
-                            <span class="product-quantity">Quantity: {{this.quantity_in_stock}}</span>
-                            <button class="add-to-cart-btn" onclick="addToCart('{{this.code}}')">Add to cart</button>
+                            <span class="product-quantity">Quantity: {{quantityInStock}}</span>
+                            <button class="add-to-cart-btn" onclick="addToCart('{{code}}')">Add to cart</button>
                         </div>
                     </div>
                 {{/each}}

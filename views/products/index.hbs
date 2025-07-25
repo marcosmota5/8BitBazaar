@@ -28,27 +28,31 @@
             <span class="welcome-title">Products</span>
         </div>
         <div>
-            {{#each products}}
-                <div class="product" id="{{code}}">
-                    <div class="product-image-wrapper">
-                        <img src="{{picture_path}}" alt="Product Image" class="product-image">
-                        {{#if is_deal}}
-                            <img src="/images/hot-deal.png" alt="Hot Deal" class="hot-deal">
-                        {{/if}}
-                    </div>
-                    <div class="product-details">
-                        <h2 class="product-name">{{name}}</h2>
-                        <p class="type">{{type}}</p>
-                        <div class="price">
-                            <span class="price-old">$ {{price}}</span>
-                            <span class="price-new">$ {{calcDiscount price discount}}</span>
+            {{#if products.length}}
+                {{#each products}}
+                    <div class="product" id="{{code}}">
+                        <div class="product-image-wrapper">
+                            <img src="{{picturePath}}" alt="Product Image" class="product-image">
+                            {{#if isDeal}}
+                                <img src="/images/hot-deal.png" alt="Hot Deal" class="hot-deal">
+                            {{/if}}
                         </div>
-                        <span class="product-quantity">Quantity: {{quantity_in_stock}}</span>
-                        <p class="description">{{description}}</p>
-                        <button class="add-to-cart-btn" onclick="addToCart('{{code}}')">Add to cart</button>
+                        <div class="product-details">
+                            <h2 class="product-name">{{name}}</h2>
+                            <p class="type">{{type}}</p>
+                            <div class="price">
+                                <span class="price-old">$ {{price}}</span>
+                                <span class="price-new">$ {{calcDiscount price discount}}</span>
+                            </div>
+                            <span class="product-quantity">Quantity: {{quantityInStock}}</span>
+                            <p class="description">{{description}}</p>
+                            <button class="add-to-cart-btn" onclick="addToCart('{{code}}')">Add to cart</button>
+                        </div>
                     </div>
-                </div>
-            {{/each}}
+                {{/each}}
+            {{else}}
+                <p>No products available at the moment.</p>
+            {{/if}}
         </div>
 
         <footer>

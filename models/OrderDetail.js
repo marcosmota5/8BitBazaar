@@ -6,7 +6,7 @@ const OrderDetailSchema = new mongoose.Schema({
   quantity: { type: Number, required: true },
   price: { type: Number, required: true },
   discount: { type: Number, required: true },
-  total_price: { type: Number, required: true }
+  totalPrice: { type: Number, required: true }
 });
 
 module.exports = mongoose.model('OrderDetail', OrderDetailSchema);

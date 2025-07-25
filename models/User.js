@@ -2,23 +2,24 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
 const UserSchema = new mongoose.Schema({
-  first_name: { type: String, required: true },
-  last_name: { type: String, required: true },
+  id: { type: Number, required: true, unique: true },
+  firstName: { type: String, required: true },
+  lastName: { type: String, required: true },
   sex: { type: String, enum: ['M', 'F', 'N'], required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true }, // hashed
-  register_date: { type: Date, default: Date.now },
-  phone_number: String,
-  picture_path: String,
-  birth_date: { type: Date, required: true },
-  address_line_1: { type: String, required: true },
-  address_line_2: String,
-  postal_code: { type: String, required: true },
+  registerDate: { type: Date, default: Date.now },
+  phoneNumber: String,
+  picturePath: String,
+  birthDate: { type: Date, required: true },
+  addressLine_1: { type: String, required: true },
+  addressLine_2: String,
+  postalCode: { type: String, required: true },
   city: { type: String, required: true },
-  state_province: { type: String, required: true },
+  stateProvince: { type: String, required: true },
   country: { type: String, required: true },
   status: { type: String, enum: ['A', 'I'], default: 'A' }
-});
+}, { collection: 'Users' });
 
 // Hash password before save
 UserSchema.pre('save', async function (next) {

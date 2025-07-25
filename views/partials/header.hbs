@@ -22,7 +22,7 @@
         {{#if currentUser}}
             <div class="user-mini-info">
                 <a href="#" id="user-mini-info">
-                    <img src="{{#if currentUser.picture_path}}{{currentUser.picture_path}}{{else}}/images/users/no-picture.png{{/if}}" alt="User Picture">
+                    <img src="{{#if currentUser.picturePath}}{{currentUser.picturePath}}{{else}}/images/users/no-picture.png{{/if}}" alt="User Picture">
                     &nbsp;<span class="user-mini-info-text">{{currentUser.first_name}}</span>
                     <span class="material-symbols-outlined">arrow_drop_down</span>
                 </a>
@@ -33,7 +33,7 @@
                     </div>
                     <div class="picture-and-details">
                         <div class="picture">
-                            <img src="{{#if currentUser.picture_path}}{{currentUser.picture_path}}{{else}}/images/users/no-picture.png{{/if}}" alt="User Picture">
+                            <img src="{{#if currentUser.picturePath}}{{currentUser.picturePath}}{{else}}/images/users/no-picture.png{{/if}}" alt="User Picture">
                         </div>
                         <div class="details">
                             <div><span class="material-symbols-outlined">person</span>&nbsp;{{currentUser.first_name}} {{currentUser.last_name}}</div>
