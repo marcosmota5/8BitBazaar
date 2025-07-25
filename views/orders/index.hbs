@@ -9,8 +9,9 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
 </head>
 <body>
-  {{> header}}
-
+  <header>
+      {{> header}}
+  </header>
   <main class="main-content-register">
     <h2>Orders</h2>
     <div class="table-content">
@@ -69,11 +70,11 @@
         <p>No orders found.</p>
       {{/if}}
     </div>
+    <footer>
+      {{> footer}}
+    </footer>
   </main>
-
-  {{> footer}}
-
-  <script src="/scripts/scripts.js"></script>
+  <script src="/js/scripts.js"></script>
   <script>
     function toggleOrderItems(orderId) {
       const row = document.getElementById('order-items-' + orderId);

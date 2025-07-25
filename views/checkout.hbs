@@ -9,8 +9,9 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
 </head>
 <body>
-    {{> header}}
-
+    <header>
+        {{> header}}
+    </header>
     <main class="main-content-checkout">
         <h1 class="checkout-title">Checkout</h1>
         <form action="/checkout" method="POST">
@@ -88,9 +89,10 @@
                 <input style="display:none" type="submit" id="submit-btn">
             </div>
         </form>
+        <footer>
+            {{> footer}}
+        </footer>
     </main>
-
-    {{> footer}}
     <script src="/js/scripts.js"></script>
 </body>
 </html>

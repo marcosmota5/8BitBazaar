@@ -12,7 +12,9 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
 </head>
 <body>
-    {{> header}}
+    <header>
+        {{> header}}
+    </header>
 
     <main>
         <h1 class="cart-title">Shopping Cart</h1>
@@ -50,10 +52,10 @@
             <input style="display: none;" type="text" id="total" name="total">
             <input class="proceed-to-checkout-btn" type="submit" value="Proceed to Checkout" />
         </form>
+        <footer>
+            {{> footer}}
+        </footer>
     </main>
-
-    {{> footer}}
-
     <script src="/js/scripts.js"></script>
     <script>updateCartItems();</script>
 </body>

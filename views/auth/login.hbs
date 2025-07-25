@@ -10,8 +10,9 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
 </head>
 <body>
-    {{> header}}
-
+    <header>
+        {{> header}}
+    </header>
     <main class="main-content-register">
         <form action="/login" method="POST">
             <div class="form-header">
@@ -56,8 +57,10 @@
                 <span class="material-symbols-outlined">code</span>&nbsp;Login with GitHub
             </a>
         </div>
-    </main>
 
-    {{> footer}}
+        <footer>
+            {{> footer}}
+        </footer>
+    </main>
 </body>
 </html>
