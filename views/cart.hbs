@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Cart | 8 Bit Bazaar</title>
+    <meta name="description" content="Website of old products">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/style-shopping-cart.css" />
+    <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+</head>
+<body>
+    {{> header}}
+
+    <main>
+        <h1 class="cart-title">Shopping Cart</h1>
+        <div class="cart-items">
+            {{#each products}}
+                <div class="cart-item" id="{{this.code}}" style="display: none">
+                    <div class="delete-button" onclick="deleteCartItem('{{this.code}}')">
+                        <span class="material-symbols-outlined">close</span>
+                    </div>
+                    <div class="cart-item-image-wrapper">
+                        <img src="{{this.picture_path}}" alt="Cart Item Image" class="cart-item-image">
+                    </div>
+                    <div class="cart-item-details">
+                        <h2 class="cart-item-name">{{this.name}}</h2>
+                    </div>
+                    <div class="form-field">
+                        <select class="input-box" id="quantity" name="quantity" onChange="updateCartItems()">
+                            {{#each this.quantityOptions}}
+                                <option value="{{this}}">{{this}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="cart-item-price">
+                        <span class="cart-item-price-new">$ {{this.discountedPrice}}</span>
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+
+        <h2 class="cart-total">Total: <span id="total-value">$ 0</span></h2>
+
+        <form action="{{#if currentUser}}/checkout{{else}}/login{{/if}}" id="form-checkout" method="{{#if currentUser}}POST{{else}}GET{{/if}}">
+            <input style="display: none;" type="text" id="product_ids" name="product_ids">
+            <input style="display: none;" type="text" id="quantities" name="quantities">
+            <input style="display: none;" type="text" id="total" name="total">
+            <input class="proceed-to-checkout-btn" type="submit" value="Proceed to Checkout" />
+        </form>
+    </main>
+
+    {{> footer}}
+
+    <script src="/js/scripts.js"></script>
+    <script>updateCartItems();</script>
+</body>
+</html>
