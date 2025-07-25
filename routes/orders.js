@@ -37,4 +37,28 @@ router.get('/:id', ensureAuth, async (req, res) => {
   res.render('orders/detail', { order, details });
 });
 
+// GET /orders - show logged-in user's orders
+router.get('/', ensureAuth, async (req, res) => {
+  try {
+    const orders = await Order.find({ user: req.user._id }).sort({ order_date: -1 }).lean();
+
+    const orderIds = orders.map(order => order._id);
+    const orderDetails = await OrderDetail.find({ order: { $in: orderIds } })
+      .populate('product')
+      .lean();
+
+    // Group items by order
+    const orderItemsByOrder = {};
+    for (const item of orderDetails) {
+      const orderId = item.order.toString();
+      if (!orderItemsByOrder[orderId]) orderItemsByOrder[orderId] = [];
+      orderItemsByOrder[orderId].push(item);
+    }
+
+    res.render('orders/index', { orders, orderItemsByOrder });
+  } catch (err) {
+    res.status(500).send('Error loading orders: ' + err.message);
+  }
+});
+
 module.exports = router;

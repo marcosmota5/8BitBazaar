@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>My Orders | 8 Bit Bazaar</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="shortcut icon" href="/images/favicon.png" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+</head>
+<body>
+  {{> header}}
+
+  <main class="main-content-register">
+    <h2>Orders</h2>
+    <div class="table-content">
+      {{#if orders.length}}
+        <table class="table-fill">
+          <tr>
+            <th>Order Code</th>
+            <th>Order Date</th>
+            <th>Total Amount</th>
+            <th>Recipient</th>
+            <th>Action</th>
+          </tr>
+          {{#each orders}}
+            <tr>
+              <td>{{code}}</td>
+              <td>{{order_date}}</td>
+              <td>${{total_amount}}</td>
+              <td>{{recipient_name}}</td>
+              <td>
+                <button onclick="toggleOrderItems('{{_id}}')">View items</button>
+                <button onclick="showReceipt('{{_id}}')">View receipt</button>
+              </td>
+            </tr>
+
+            {{#if (lookup ../orderItemsByOrder _id)}}
+              <tr id="order-items-{{_id}}" style="display:none;">
+                <td colspan="5">
+                  <table border="1" cellpadding="5">
+                    <tr>
+                      <th>Code</th>
+                      <th>Image</th>
+                      <th>Name</th>
+                      <th>Quantity</th>
+                      <th>Price</th>
+                      <th>Discount</th>
+                      <th>Total Price</th>
+                    </tr>
+                    {{#each (lookup ../orderItemsByOrder _id)}}
+                      <tr>
+                        <td>{{product.code}}</td>
+                        <td><img src="{{product.picture_path}}" alt="Product Image" class="product-image" /></td>
+                        <td>{{product.name}}</td>
+                        <td>{{quantity}}</td>
+                        <td>$ {{price}}</td>
+                        <td>{{discount}}%</td>
+                        <td>$ {{total_price}}</td>
+                      </tr>
+                    {{/each}}
+                  </table>
+                </td>
+              </tr>
+            {{/if}}
+          {{/each}}
+        </table>
+      {{else}}
+        <p>No orders found.</p>
+      {{/if}}
+    </div>
+  </main>
+
+  {{> footer}}
+
+  <script src="/scripts/scripts.js"></script>
+  <script>
+    function toggleOrderItems(orderId) {
+      const row = document.getElementById('order-items-' + orderId);
+      row.style.display = row.style.display === 'none' || row.style.display === '' ? 'table-row' : 'none';
+    }
+
+    function showReceipt(orderId) {
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = '/receipt';
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = 'order_id';
+      input.value = orderId;
+      form.appendChild(input);
+      document.body.appendChild(form);
+      form.submit();
+    }
+  </script>
+</body>
+</html>
