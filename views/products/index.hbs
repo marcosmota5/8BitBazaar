@@ -62,9 +62,10 @@
 
     <script src="/js/scripts.js"></script>
     {{#if toastrMessage}}
-    <script>
-        toastr.success('{{toastrMessage}}', 'Success');
-    </script>
+        <script>
+            toastr.options.positionClass = 'toast-bottom-right';
+            toastr.success('{{toastrMessage}}', 'Success');
+        </script>
     {{/if}}
 </body>
 

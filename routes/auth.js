@@ -8,17 +8,49 @@ const path = require('path');
 // Multer setup for file uploads
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, 'public/images/users/'),
-  filename: (req, file, cb) => cb(null, `${req.user._id}_${Date.now()}${path.extname(file.originalname)}`)
+  filename: (req, file, cb) => cb(null, `${Date.now()}${path.extname(file.originalname)}`)
 });
 const upload = multer({ storage });
 
 // Register page
-router.get('/register', (req, res) => res.render('auth/register'));
-router.post('/register', async (req, res) => {
+router.get('/register', (req, res) => {
+  const provinces = [
+    'Alberta',
+    'British Columbia',
+    'Manitoba',
+    'New Brunswick',
+    'Newfoundland and Labrador',
+    'Nova Scotia',
+    'Ontario',
+    'Prince Edward Island',
+    'Quebec',
+    'Saskatchewan'
+  ];
+  res.render('auth/register', { provinces });
+});
+router.post('/register', upload.single('profilePicture'), async (req, res) => {
   try {
-    await User.create({ username: req.body.username, password: req.body.password });
+    const userData = {
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      sex: req.body.sex,
+      email: req.body.email,
+      password: req.body.password,
+      birthDate: req.body.birthDate,
+      addressLine_1: req.body.addressLine_1,
+      addressLine_2: req.body.addressLine_2,
+      postalCode: req.body.postalCode,
+      city: req.body.city,
+      stateProvince: req.body.stateProvince,
+      country: req.body.country,
+      picturePath: req.file ? `/images/users/${req.file.filename}` : null
+    };
+    console.log("REGISTER BODY:", req.body);
+    console.log("REGISTER FILE:", req.file);
+    await User.create(userData);
     res.redirect('/login');
   } catch (err) {
+    //console.error(err);
     res.send('Error registering: ' + err.message);
   }
 });
@@ -34,7 +66,7 @@ router.post('/login',
     failureFlash: 'Invalid email or password'
   }),
   (req, res) => {
-    res.redirect('/products'); // redirect after successful login
+    res.redirect('/'); // redirect after successful login
   }
 );
 

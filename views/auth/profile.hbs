@@ -38,18 +38,18 @@
         <div class="form-field-group">
             <div class="form-field">
                 <label for="first-name">First name<span class="required">*</span></label>
-                <input class="input-box" type="text" id="first-name" name="first-name" maxlength="30" value="{{user.first_name}}" required>
+                <input class="input-box" type="text" id="first-name" name="firstName" maxlength="30" value="{{user.firstName}}" required>
             </div>
             <div class="form-field">
                 <label for="last-name">Last name<span class="required">*</span></label>
-                <input class="input-box" type="text" id="last-name" name="last-name" maxlength="30" value="{{user.last_name}}" required>
+                <input class="input-box" type="text" id="last-name" name="lastName" maxlength="30" value="{{user.lastName}}" required>
             </div>
         </div>
 
         <div class="form-field-group">
             <div class="form-field">
                 <label for="birth-date">Birth date<span class="required">*</span></label>
-                <input class="input-box" type="date" id="birth-date" name="birth-date" min="1900-01-01" value="{{user.birth_date}}" required>
+                <input class="input-box" type="date" id="birth-date" name="birthDate" min="1900-01-01" value="{{user.birthDate}}" required>
             </div>
             <div class="form-field">
                 <label for="sex">Sex<span class="required">*</span></label>
@@ -63,7 +63,7 @@
                 <label for="profile-picture">Profile picture</label>
                 <div class="user-image-selector">
                     <img id="image-preview" src="{{#if user.picturePath}}{{user.picturePath}}{{else}}/images/users/no-picture.png{{/if}}" alt="Image Preview">
-                    <input type="file" id="profile-picture" name="profile-picture" accept="image/*">
+                    <input type="file" id="profile-picture" name="profilePicture" accept="image/*">
                 </div>
             </div>
         </div>
@@ -71,7 +71,7 @@
         <div class="form-field-group">
             <div class="form-field">
                 <label for="phone-number">Phone Number<span class="required">*</span></label>
-                <input class="input-box" type="tel" id="phone-number" name="phone-number" maxlength="20" value="{{user.phone_number}}" required>
+                <input class="input-box" type="tel" id="phone-number" name="phoneNumber" maxlength="20" value="{{user.phoneNumber}}" required>
             </div>
             <div class="form-field">
                 <label for="email">Email<span class="required">*</span></label>
@@ -82,17 +82,17 @@
         <div class="form-field-group">
             <div class="form-field">
                 <label for="address-line-1">Address line 1<span class="required">*</span></label>
-                <input class="input-box" type="text" id="address-line-1" name="address-line-1" maxlength="100" value="{{user.address_line_1}}" required>
+                <input class="input-box" type="text" id="address-line-1" name="addressLine_1" maxlength="100" value="{{user.addressLine_1}}" required>
             </div>
-        </div>
+        </div>addressLine_2
         <div class="form-field-group">
             <div class="form-field">
                 <label for="address-line-2">Address line 2</label>
-                <input class="input-box" type="text" id="address-line-2" name="address-line-2" maxlength="100" value="{{user.address_line_2}}">
+                <input class="input-box" type="text" id="address-line-2" name="addressLine_2" maxlength="100" value="{{user.addressLine_2}}">
             </div>
             <div class="form-field">
                 <label for="postal-code">Postal Code<span class="required">*</span></label>
-                <input class="input-box" type="text" id="postal-code" name="postal-code" maxlength="20" value="{{user.postal_code}}" required>
+                <input class="input-box" type="text" id="postal-code" name="postalCode" maxlength="20" value="{{user.postalCode}}" required>
             </div>
         </div>
 
@@ -105,9 +105,9 @@
             </div>
             <div class="form-field">
                 <label for="province">Province<span class="required">*</span></label>
-                <select class="input-box" id="province" name="province" required>
+                <select class="input-box" id="province" name="stateProvince" required>
                     {{#each provinces}}
-                    <option value="{{this}}" {{#if (eq ../user.state_province this)}}selected{{/if}}>{{this}}</option>
+                    <option value="{{this}}" {{#if (eq ../user.stateProvince this)}}selected{{/if}}>{{this}}</option>
                     {{/each}}
                 </select>
             </div>
@@ -150,8 +150,14 @@
     });
 
     // Toastr flash
-    {{#if success}} toastr.success('{{success}}', 'Success'); {{/if}}
-    {{#if error}} toastr.error('{{error}}', 'Error'); {{/if}}
+    {{#if success}}
+        toastr.options.positionClass = 'toast-bottom-right';
+        toastr.success('{{success}}', 'Success');
+    {{/if}}
+    {{#if error}}
+        toastr.options.positionClass = 'toast-bottom-right';
+        toastr.error('{{error}}', 'Error');
+    {{/if}}
 </script>
 </body>
 </html>

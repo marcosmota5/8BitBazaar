@@ -55,6 +55,8 @@ function addToCart(productId) {
 
         document.getElementById("cart").setAttribute("data-count", cartItems.length);
 
+        toastr.options.positionClass = 'toast-bottom-right';
+
         // Show a notification
         toastr.success('Item added to cart!', 'Success');
     }
