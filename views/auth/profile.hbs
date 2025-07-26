@@ -24,17 +24,6 @@
             <h2>My Profile</h2>
         </div>
 
-        {{#if success}}
-        <div class="success-message">
-            <strong>{{success}}</strong>
-        </div>
-        {{/if}}
-        {{#if error}}
-        <div class="error-message">
-            <strong>{{error}}</strong>
-        </div>
-        {{/if}}
-
         <div class="form-field-group">
             <div class="form-field">
                 <label for="first-name">First name<span class="required">*</span></label>
@@ -84,7 +73,7 @@
                 <label for="address-line-1">Address line 1<span class="required">*</span></label>
                 <input class="input-box" type="text" id="address-line-1" name="addressLine_1" maxlength="100" value="{{user.addressLine_1}}" required>
             </div>
-        </div>addressLine_2
+        </div>
         <div class="form-field-group">
             <div class="form-field">
                 <label for="address-line-2">Address line 2</label>
@@ -129,6 +118,7 @@
         {{> footer}}
     </footer>
 </main>
+<script src="/js/scripts.js"></script>
 <script>
     // Set max date for birthdate
     document.addEventListener("DOMContentLoaded", function () {

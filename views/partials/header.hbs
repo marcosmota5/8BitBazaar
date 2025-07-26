@@ -23,7 +23,7 @@
             <div class="user-mini-info">
                 <a href="#" id="user-mini-info">
                     <img src="{{#if currentUser.picturePath}}{{currentUser.picturePath}}{{else}}/images/users/no-picture.png{{/if}}" alt="User Picture">
-                    &nbsp;<span class="user-mini-info-text">{{currentUser.first_name}}</span>
+                    &nbsp;<span class="user-mini-info-text">{{currentUser.firstName}}</span>
                     <span class="material-symbols-outlined">arrow_drop_down</span>
                 </a>
                 <div id="user-popup" class="user-popup-content">
@@ -36,8 +36,8 @@
                             <img src="{{#if currentUser.picturePath}}{{currentUser.picturePath}}{{else}}/images/users/no-picture.png{{/if}}" alt="User Picture">
                         </div>
                         <div class="details">
-                            <div><span class="material-symbols-outlined">person</span>&nbsp;{{currentUser.first_name}} {{currentUser.last_name}}</div>
-                            <div><span class="material-symbols-outlined">phone</span>&nbsp;{{currentUser.phone_number}}</div>
+                            <div><span class="material-symbols-outlined">person</span>&nbsp;{{currentUser.firstName}} {{currentUser.lastName}}</div>
+                            <div><span class="material-symbols-outlined">phone</span>&nbsp;{{currentUser.phoneNumber}}</div>
                             <div><span class="material-symbols-outlined">email</span>&nbsp;{{currentUser.email}}</div>
                         </div>
                     </div>

@@ -37,7 +37,7 @@ router.post('/change-password', ensureAuth, async (req, res) => {
     }
 
     // Update password
-    user.password = await bcrypt.hash(newPassword, 10);
+    user.password = newPassword; // This will automatically hash the password due to the pre-save hook in User model
     await user.save();
 
     return res.render('change-password', { successMessage: "Password successfully changed!", errorMessages: null });

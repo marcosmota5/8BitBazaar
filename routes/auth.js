@@ -37,6 +37,7 @@ router.post('/register', upload.single('profilePicture'), async (req, res) => {
       email: req.body.email,
       password: req.body.password,
       birthDate: req.body.birthDate,
+      phoneNumber: req.body.phoneNumber,
       addressLine_1: req.body.addressLine_1,
       addressLine_2: req.body.addressLine_2,
       postalCode: req.body.postalCode,
@@ -45,8 +46,6 @@ router.post('/register', upload.single('profilePicture'), async (req, res) => {
       country: req.body.country,
       picturePath: req.file ? `/images/users/${req.file.filename}` : null
     };
-    console.log("REGISTER BODY:", req.body);
-    console.log("REGISTER FILE:", req.file);
     await User.create(userData);
     res.redirect('/login');
   } catch (err) {
@@ -87,26 +86,47 @@ router.get('/auth/github/callback',
 // Profile page
 router.get('/profile', (req, res) => {
   if (!req.isAuthenticated()) return res.redirect('/login');
-  res.render('auth/profile', { user: req.user });
+    const provinces = [
+    'Alberta',
+    'British Columbia',
+    'Manitoba',
+    'New Brunswick',
+    'Newfoundland and Labrador',
+    'Nova Scotia',
+    'Ontario',
+    'Prince Edward Island',
+    'Quebec',
+    'Saskatchewan'
+  ];
+
+  // Format birthDate as YYYY-MM-DD for input type="date"
+  const user = req.user.toObject();
+  if (user.birthDate) {
+    user.birthDate = user.birthDate.toISOString().split('T')[0];
+  }
+
+  res.render('auth/profile', { user, provinces });
 });
 
 // Save full profile changes
-router.post('/profile', upload.single('profile-picture'), async (req, res) => {
+router.post('/profile', upload.single('profilePicture'), async (req, res) => {
   if (!req.isAuthenticated()) return res.redirect('/login');
   try {
-    const updateData = {
-      first_name: req.body['first-name'],
-      last_name: req.body['last-name'],
-      birth_date: req.body['birth-date'],
+   const updateData = {
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
       sex: req.body.sex,
-      phone_number: req.body['phone-number'],
       email: req.body.email,
-      address_line_1: req.body['address-line-1'],
-      address_line_2: req.body['address-line-2'],
-      postal_code: req.body['postal-code'],
+      password: req.body.password,
+      birthDate: req.body.birthDate,
+      phoneNumber: req.body.phoneNumber,
+      addressLine_1: req.body.addressLine_1,
+      addressLine_2: req.body.addressLine_2,
+      postalCode: req.body.postalCode,
+      city: req.body.city,
+      stateProvince: req.body.stateProvince,
       country: req.body.country,
-      state_province: req.body.province,
-      city: req.body.city
+      picturePath: req.file ? `/images/users/${req.file.filename}` : null
     };
     if (req.file) updateData.picturePath = `/images/users/${req.file.filename}`;
     await User.findByIdAndUpdate(req.user._id, updateData);

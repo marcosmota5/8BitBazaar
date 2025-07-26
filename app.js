@@ -61,7 +61,8 @@ app.use(passport.session());
 const flash = require('connect-flash');
 app.use(flash());
 app.use((req, res, next) => {
-  res.locals.error = req.flash('error'); // makes error messages available to templates
+  res.locals.error = req.flash('error');
+  res.locals.success = req.flash('success');
   next();
 });
 
