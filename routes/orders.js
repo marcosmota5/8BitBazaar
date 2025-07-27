@@ -64,6 +64,7 @@ router.get('/', ensureAuth, async (req, res) => {
     for (const item of orderDetails) {
       const orderId = item.order.toString();
       if (!orderItemsByOrder[orderId]) orderItemsByOrder[orderId] = [];
+      item.discountFormatted = (item.discount * 100).toFixed(2); // Format discount as percentage
       orderItemsByOrder[orderId].push(item);
     }
 
