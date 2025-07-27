@@ -24,7 +24,7 @@
       <div class="receipt-details">
         <h4>Order Details:</h4>
         <ul>
-          <li>Date time of the order: {{order.order_date}}</li>
+          <li>Date time of the order: {{order.formattedDate}}</li>
           <li>Order number: {{order.code}}</li>
         </ul>
 
@@ -35,22 +35,22 @@
               {{product.name}}. 
               Quantity: {{quantity}}. 
               Value: <span class="price-new">$ {{price}}</span>. 
-              Total: <span class="price-new">$ {{total_price}}</span>
+              Total: <span class="price-new">$ {{totalPrice}}</span>
             </li>
           {{/each}}
         </ul>
 
-        <h4>Total: <span id="total-value">$ {{order.total_amount}}</span></h4>
+        <h4>Total: <span id="total-value">$ {{order.totalAmount}}</span></h4>
 
         <h4>Contact Information:</h4>
         <ul>
-          <li>Recipient name: {{order.recipient_name}}</li>
-          <li>Phone number: {{order.phone_number}}</li>
-          <li>Address line 1: {{order.address_line_1}}</li>
-          <li>Address line 2: {{order.address_line_2}}</li>
-          <li>Postal code: {{order.postal_code}}</li>
+          <li>Recipient name: {{order.recipientName}}</li>
+          <li>Phone number: {{order.phoneNumber}}</li>
+          <li>Address line 1: {{order.addressLine_1}}</li>
+          <li>Address line 2: {{order.addressLine_2}}</li>
+          <li>Postal code: {{order.postalCode}}</li>
           <li>Country: {{order.country}}</li>
-          <li>State/province: {{order.state_province}}</li>
+          <li>State/province: {{order.stateProvince}}</li>
           <li>City: {{order.city}}</li>
         </ul>
         <br>
@@ -62,5 +62,10 @@
   </footer>
   </main>
   <script src="/js/scripts.js"></script>
+  {{#if clearCart}}
+    <script>
+        clearCart();
+    </script>
+  {{/if}}
 </body>
 </html>

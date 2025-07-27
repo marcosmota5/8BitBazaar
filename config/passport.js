@@ -52,11 +52,11 @@ passport.use(new GitHubStrategy({
 
 // Serialize & Deserialize user
 passport.serializeUser((user, done) => {
-  done(null, user.id); // store numeric id
+  done(null, user._id); // store numeric id
 });
-passport.deserializeUser(async (id, done) => {
+passport.deserializeUser(async (_id, done) => {
   try {
-    const user = await User.findOne({ id }); // find by numeric id
+    const user = await User.findById(_id); // find by numeric id
     done(null, user);
   } catch (err) {
     done(err);

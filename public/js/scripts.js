@@ -156,9 +156,9 @@ function deleteCartItem(productId) {
 }
 
 /**
- * Updates the receipt element with the items found.
+ * Clear the cart.
  */
-function updateReceiptItems() {
+function clearCart() {
 
     // Set the product ids in the session to empty, clearing it
     sessionStorage.setItem("productids", "");

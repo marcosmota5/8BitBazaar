@@ -32,7 +32,7 @@ router.post('/checkout', ensureAuth, async (req, res) => {
 
 // View single order
 router.get('/:id', ensureAuth, async (req, res) => {
-  const order = await Order.findById(req.params.id).populate('user');
+  const order = await Order.findById(req.params._id).populate('user');
   const details = await OrderDetail.find({ order: order._id }).populate('product');
   res.render('orders/detail', { order, details });
 });
@@ -41,6 +41,18 @@ router.get('/:id', ensureAuth, async (req, res) => {
 router.get('/', ensureAuth, async (req, res) => {
   try {
     const orders = await Order.find({ user: req.user._id }).sort({ order_date: -1 }).lean();
+
+    // Format order dates
+    orders.forEach(order => {
+      const date = new Date(order.orderDate);
+      order.formattedDate = date.toLocaleString(undefined, {
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    });
 
     const orderIds = orders.map(order => order._id);
     const orderDetails = await OrderDetail.find({ order: { $in: orderIds } })

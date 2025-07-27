@@ -84,7 +84,7 @@
             <h2 class="featured-deals-title">Featured Deals</h2>
             <div class="featured-deals">
                 {{#each products}}
-                    <div class="product" id="{{code}}">
+                    <div class="product" id="{{_id}}">
                         <div class="product-image-container">
                             <img class="product-image" src="{{picturePath}}" alt="Product Image">
                             <img src="/images/hot-deal.png" alt="Hot Deal" class="hot-deal">
@@ -96,7 +96,7 @@
                                 <span class="product-price-new">${{calcDiscount price discount}}</span>
                             </div>
                             <span class="product-quantity">Quantity: {{quantityInStock}}</span>
-                            <button class="add-to-cart-btn" onclick="addToCart('{{code}}')">Add to cart</button>
+                            <button class="add-to-cart-btn" onclick="addToCart('{{_id}}')">Add to cart</button>
                         </div>
                     </div>
                 {{/each}}

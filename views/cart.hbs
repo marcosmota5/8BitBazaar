@@ -21,8 +21,8 @@
         <div class="cart-items">
             {{#if products.length}}
                 {{#each products}}
-                    <div class="cart-item" id="{{code}}" style="display: none">
-                        <div class="delete-button" onclick="deleteCartItem('{{code}}')">
+                    <div class="cart-item" id="{{_id}}" style="display: none">
+                        <div class="delete-button" onclick="deleteCartItem('{{_id}}')">
                             <span class="material-symbols-outlined">close</span>
                         </div>
                         <div class="cart-item-image-wrapper">
@@ -50,7 +50,7 @@
         {{#if products.length}}
             <h2 class="cart-total">Total: <span id="total-value">$ 0</span></h2>
 
-            <form action="{{#if currentUser}}/checkout{{else}}/login{{/if}}" id="form-checkout" method="{{#if currentUser}}POST{{else}}GET{{/if}}">
+            <form action="{{#if currentUser}}/checkout{{else}}/login{{/if}}" id="form-checkout" method="GET">
                 <input style="display: none;" type="text" id="product_ids" name="product_ids">
                 <input style="display: none;" type="text" id="quantities" name="quantities">
                 <input style="display: none;" type="text" id="total" name="total">

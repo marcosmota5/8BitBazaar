@@ -27,9 +27,9 @@
           {{#each orders}}
             <tr>
               <td>{{code}}</td>
-              <td>{{order_date}}</td>
-              <td>${{total_amount}}</td>
-              <td>{{recipient_name}}</td>
+              <td>{{formattedDate}}</td>
+              <td>${{totalAmount}}</td>
+              <td>{{recipientName}}</td>
               <td>
                 <button onclick="toggleOrderItems('{{_id}}')">View items</button>
                 <button onclick="showReceipt('{{_id}}')">View receipt</button>
@@ -57,7 +57,7 @@
                         <td>{{quantity}}</td>
                         <td>$ {{price}}</td>
                         <td>{{discount}}%</td>
-                        <td>$ {{total_price}}</td>
+                        <td>$ {{totalPrice}}</td>
                       </tr>
                     {{/each}}
                   </table>
@@ -82,16 +82,7 @@
     }
 
     function showReceipt(orderId) {
-      const form = document.createElement('form');
-      form.method = 'POST';
-      form.action = '/receipt';
-      const input = document.createElement('input');
-      input.type = 'hidden';
-      input.name = 'order_id';
-      input.value = orderId;
-      form.appendChild(input);
-      document.body.appendChild(form);
-      form.submit();
+      window.location.href = '/receipt/' + orderId;
     }
   </script>
 </body>

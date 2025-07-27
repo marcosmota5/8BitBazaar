@@ -26,17 +26,17 @@ router.post('/add', ensureAuth, async (req, res) => {
 
 // Update
 router.get('/:id/edit', ensureAuth, async (req, res) => {
-  const product = await Product.findById(req.params.id);
+  const product = await Product.findById(req.params._id);
   res.render('products/edit', { product });
 });
 router.post('/:id/edit', ensureAuth, async (req, res) => {
-  await Product.findByIdAndUpdate(req.params.id, req.body);
+  await Product.findByIdAndUpdate(req.params._id, req.body);
   res.redirect('/products');
 });
 
 // Delete
 router.get('/:id/delete', ensureAuth, async (req, res) => {
-  await Product.findByIdAndDelete(req.params.id);
+  await Product.findByIdAndDelete(req.params._id);
   res.redirect('/products');
 });
 
