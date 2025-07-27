@@ -27,23 +27,23 @@ passport.use(new GitHubStrategy({
     if (!user) {
       user = await User.create({
         githubId: profile.id,
-        username: profile.username,
-        email: profile.emails && profile.emails[0] ? profile.emails[0].value : `${profile.username}@github.com`,
-        firstName: profile.displayName || profile.username,
-        lastName: '',
+        email: profile.emails?.[0]?.value || `noemail-${profile.id}@github.com`,
+        firstName: profile.displayName || profile.username || "GitHubUser",
+        lastName: "(GitHub)",
         sex: 'N',
         password: Math.random().toString(36).slice(-8), // random placeholder
         registerDate: new Date(),
-        birthDate: new Date('1970-01-01'), // placeholder
-        addressLine_1: '',
-        postalCode: '',
-        city: '',
-        stateProvince: '',
-        country: '',
+        birthDate: new Date('1990-01-01'), // placeholder
+        addressLine_1: "Not Provided",
+        postalCode: "00000",
+        city: "Not Provided",
+        stateProvince: "Ontario",
+        country: "Canada",
         status: 'A',
         profile: 'User'
       });
     }
+
     return done(null, user);
   } catch (err) {
     return done(err);
