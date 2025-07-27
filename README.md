@@ -56,8 +56,6 @@ Thanks to <a href="https://www.flaticon.com/" title="Flaticon">Flaticon</a> for 
 
 Thanks also to <a href="https://www.wikipedia.com/" title="Wikipedia">Wikipedia</a> for providing free educational content. The image and description of all games in this website come from Wikipedia, so all rights are reserved to it.
 
-- <a href="https://www.flaticon.com/free-icons/video-game" title="video-game icons">Video-game icons created by Freepik - Flaticon</a>
-
 Other images
 
 - <a href="https://www.flaticon.com/free-icons/browser" title="browser icons">Browser icons created by Freepik - Flaticon</a>
