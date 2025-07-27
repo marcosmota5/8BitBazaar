@@ -70,22 +70,43 @@ router.post('/register', upload.single('profilePicture'), async (req, res) => {
 });
 
 router.get('/login', (req, res) => {
-  res.render('auth/login');
+  res.render('auth/login', { returnTo: req.session.returnTo || null });
 });
 
 // POST login with flash error messages
 router.post('/login', (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {
     if (err) return next(err);
+
     if (!user) {
-      req.flash('error', 'Invalid email or password');
+      req.flash('error', info?.message || 'Login failed');
       return res.redirect('/login');
     }
+    // Redirect to the saved URL or fallback to home
+    const redirectUrl = req.flash('returnTo')[0] || '/';
+    req.logIn(user, (err) => {
+      if (err) return next(err);
+      req.flash('success', 'Login successful!');      
+      res.redirect(redirectUrl);
+    });
+  })(req, res, next);
+});
+
+// GitHub Login
+router.get('/auth/github', passport.authenticate('github', { scope: [ 'user:email' ] }));
+router.get('/auth/github/callback', (req, res, next) => {
+  passport.authenticate('github', { failureRedirect: '/login', failureFlash: true }, (err, user, info) => {
+    if (err) return next(err);
+    if (!user) return res.redirect('/login');
+
+    // Get flash BEFORE logging in
+    const redirectUrl = req.flash('returnTo')[0] || '/';
+    console.log(`GitHub login successful, redirecting to: ${redirectUrl}`);
 
     req.logIn(user, (err) => {
       if (err) return next(err);
-      req.flash('success', 'Login successful!');
-      res.redirect('/');
+      req.flash('success', 'Logged with GitHub successfully!');
+      res.redirect(redirectUrl);
     });
   })(req, res, next);
 });
@@ -97,16 +118,6 @@ router.get('/logout', (req, res) => {
     res.redirect('/');
   });
 });
-
-// GitHub Login
-router.get('/auth/github', passport.authenticate('github', { scope: [ 'user:email' ] }));
-router.get('/auth/github/callback',
-  passport.authenticate('github', { failureRedirect: '/login' }),
-  (req, res) => {
-    req.flash('success', 'Logged with GitHub successful!');
-    res.redirect('/'); // redirect after successful login
-  }
-);
 
 // Profile page
 router.get('/profile', (req, res) => {

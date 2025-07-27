@@ -4,6 +4,9 @@
     <a href="/products">Products</a>
     {{#if currentUser}}
         <a href="/orders">My orders</a>
+        {{#if (eq currentUser.profile "Admin")}}
+        <a href="/users">Users</a>
+        {{/if}}
     {{/if}}
     <a href="/contact">Contact</a>
     <a href="/about">About</a>

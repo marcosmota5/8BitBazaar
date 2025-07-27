@@ -8,6 +8,12 @@ passport.use(new LocalStrategy({ usernameField: 'email' }, async (email, passwor
   try {
     const user = await User.findOne({ email });
     if (!user) return done(null, false, { message: 'Incorrect email.' });
+
+    // Check if user is inactive
+    if (user.status === 'I') {
+      return done(null, false, { message: 'Your account is inactive. Please contact support.' });
+    }
+
     const isMatch = await user.comparePassword(password);
     if (!isMatch) return done(null, false, { message: 'Incorrect password.' });
     return done(null, user);
@@ -23,7 +29,15 @@ passport.use(new GitHubStrategy({
   callbackURL: "/auth/github/callback"
 }, async (accessToken, refreshToken, profile, done) => {
   try {
+    // Try finding by GitHub ID
     let user = await User.findOne({ githubId: profile.id });
+
+    // If not found by GitHub ID, try by email
+    if (!user && profile.emails?.length) {
+      user = await User.findOne({ email: profile.emails[0].value });
+    }
+
+    // If still not found, create a new one
     if (!user) {
       user = await User.create({
         githubId: profile.id,
@@ -31,9 +45,9 @@ passport.use(new GitHubStrategy({
         firstName: profile.displayName || profile.username || "GitHubUser",
         lastName: "(GitHub)",
         sex: 'N',
-        password: Math.random().toString(36).slice(-8), // random placeholder
+        password: Math.random().toString(36).slice(-8),
         registerDate: new Date(),
-        birthDate: new Date('1990-01-01'), // placeholder
+        birthDate: new Date('1990-01-01'),
         addressLine_1: "Not Provided",
         postalCode: "00000",
         city: "Not Provided",
@@ -42,6 +56,16 @@ passport.use(new GitHubStrategy({
         status: 'A',
         profile: 'User'
       });
+    } 
+    // If found by email but no GitHub ID, link the account
+    else if (!user.githubId) {
+      user.githubId = profile.id;
+      await user.save();
+    }
+
+    // Check if account is inactive
+    if (user.status === 'I') {
+      return done(null, false, { message: 'Account is inactive. Please contact support.' });
     }
 
     return done(null, user);

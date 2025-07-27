@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Users | 8 Bit Bazaar</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/style-users.css" />
+  <link rel="shortcut icon" href="/images/favicon.png" />
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+</head>
+<body>
+  <header>
+      {{> header}}
+  </header>
+  <main class="main-content-register">
+    <h2>Users</h2>
+    <div class="table-content">
+      {{#if users.length}}
+        <table class="table-fill">
+          <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Action</th>
+          </tr>
+          {{#each users}}
+            <tr>
+              <td>{{firstName}}</td>
+              <td>{{lastName}}</td>
+              <td>{{email}}</td>
+              <td>
+                <div class="action-buttons">
+                  <form action="/users/update/{{_id}}" method="POST" class="inline-form">
+                    <div class="form-group">
+                      <label for="profile-{{_id}}">Profile</label>
+                      <select id="profile-{{_id}}" name="profile">
+                        <option value="User" {{#if (eq profile "User")}}selected{{/if}}>User</option>
+                        <option value="Admin" {{#if (eq profile "Admin")}}selected{{/if}}>Admin</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="status-{{_id}}">Status</label>
+                      <select id="status-{{_id}}" name="status">
+                        <option value="A" {{#if (eq status "A")}}selected{{/if}}>Active</option>
+                        <option value="I" {{#if (eq status "I")}}selected{{/if}}>Inactive</option>
+                      </select>
+                    </div>
+                    <button type="submit" class="save-btn">Save</button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+          {{/each}}
+        </table>
+      {{else}}
+        <p>No users found.</p>
+      {{/if}}
+    </div>
+    <footer>
+      {{> footer}}
+    </footer>
+  </main>
+  <script src="/js/scripts.js"></script>
+  <script>
+    {{#if successMessage}}
+        toastr.options.positionClass = 'toast-bottom-right';
+        toastr.success('{{successMessage}}', 'Success');
+    {{/if}}
+    {{#if errorMessages}}
+        toastr.options.positionClass = 'toast-bottom-right';
+        toastr.error('{{errorMessages}}', 'Error');
+    {{/if}} 
+  </script>
+</body>
+</html>

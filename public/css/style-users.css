@@ -1,0 +1,36 @@
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.inline-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.form-group label {
+  font-size: 0.9em;
+  font-weight: bold;
+  margin-bottom: 3px;
+}
+
+.form-group select {
+  padding: 5px;
+  font-size: 0.9em;
+}
+
+.save-btn {
+  background-color: #007bff;
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9em;
+  border-radius: 4px;
+}
+
+.save-btn:hover {
+  background-color: #0056b3;
+}

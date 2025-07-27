@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
 const UserSchema = new mongoose.Schema({
+  githubId: { type: String, unique: true, sparse: true },
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
   sex: { type: String, enum: ['M', 'F', 'N'], required: true },

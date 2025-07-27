@@ -9,7 +9,12 @@
     <link rel="stylesheet" href="/css/style.css" />
     <link rel="stylesheet" href="/css/style-shopping-cart.css" />
     <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 </head>
 <body>
     <header>
@@ -50,7 +55,7 @@
         {{#if products.length}}
             <h2 class="cart-total">Total: <span id="total-value">$ 0</span></h2>
 
-            <form action="{{#if currentUser}}/checkout{{else}}/login{{/if}}" id="form-checkout" method="GET">
+            <form action="/checkout" id="form-checkout" method="GET">
                 <input style="display: none;" type="text" id="product_ids" name="product_ids">
                 <input style="display: none;" type="text" id="quantities" name="quantities">
                 <input style="display: none;" type="text" id="total" name="total">
