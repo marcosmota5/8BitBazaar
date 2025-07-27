@@ -17,6 +17,9 @@
     <!-- Toastr -->
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <!-- Sweetalert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -28,9 +31,30 @@
             <span class="welcome-title">Products</span>
         </div>
         <div>
+           {{#if (eq currentUser.profile "Admin")}}
+                <div style="text-align: center;">
+                    <a href="/products/add" class="add-product-btn">Add Product</a>
+                    <div>
+                        <label for="show-all-products">Show all products</label>
+                        <input 
+                            class="input-box" 
+                            type="checkbox" 
+                            id="show-all-products" 
+                            name="showAllProducts" 
+                            {{#if showAllProducts}}checked{{/if}}
+                            onchange="toggleShowAllProducts(this)">
+                    </div>
+                </div>
+            {{/if}}
             {{#if products.length}}
                 {{#each products}}
                     <div class="product" id="{{_id}}">
+                        {{#if (eq ../currentUser.profile "Admin")}}
+                            <div class="admin-actions">
+                                <a href="/products/edit/{{_id}}" class="edit-product-btn">Edit</a>
+                                <button class="delete-btn" onclick="deleteProduct('{{_id}}')">Delete</button>
+                            </div>
+                        {{/if}}
                         <div class="product-image-wrapper">
                             <img src="{{picturePath}}" alt="Product Image" class="product-image">
                             {{#if isDeal}}
@@ -38,7 +62,15 @@
                             {{/if}}
                         </div>
                         <div class="product-details">
-                            <h2 class="product-name">{{name}}</h2>
+                            <h2 class="product-name">{{name}}
+                                {{#if (eq ../currentUser.profile "Admin")}}
+                                    {{#if ../showAllProducts}}
+                                        <span class="status-text">
+                                        ({{#if (eq status "A")}}Active{{else}}Inactive{{/if}})
+                                        </span>
+                                    {{/if}}
+                                {{/if}}
+                            </h2>
                             <p class="type">{{type}}</p>
                             <div class="price">
                                 <span class="price-old">$ {{price}}</span>
@@ -61,6 +93,48 @@
     </main>
 
     <script src="/js/scripts.js"></script>
+    {{#if (eq currentUser.profile "Admin")}}
+        <script>
+            function toggleShowAllProducts(checkbox) {
+                const showAll = checkbox.checked ? 'true' : 'false';
+                const url = new URL(window.location.href);
+                url.searchParams.set('showAllProducts', showAll);
+                window.location.href = url.toString();
+            }
+            function deleteProduct(productId) {
+                Swal.fire({
+                    title: 'Confirm deletion',
+                    text: 'Are you sure you want to delete the product? This action cannot be undone.',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, delete it!',
+                    cancelButtonText: 'No, cancel'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+
+                        // Create a form element
+                        var form = document.createElement('form');
+                        form.method = 'POST';
+                        form.action = '/products/delete';
+
+                        // Create an input element for the order_id
+                        var input = document.createElement('input');
+                        input.type = 'hidden';
+                        input.name = 'id';
+                        input.value = productId;
+
+                        // Append the input to the form and the form to the body
+                        form.appendChild(input);
+                        document.body.appendChild(form);
+
+                        // Submit the form
+                        form.submit();
+                    }
+                });
+                
+            }
+        </script>
+    {{/if}}
     {{#if toastrMessage}}
         <script>
             toastr.options.positionClass = 'toast-bottom-right';

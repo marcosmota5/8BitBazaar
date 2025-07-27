@@ -79,3 +79,77 @@ body {
   margin-bottom: 10px;
   flex: 1;
 }
+
+
+
+
+
+
+
+
+/* Add Product button */
+.add-product-btn {
+  display: inline-block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 1rem;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+.add-product-btn:hover {
+  background-color: #0056b3;
+}
+
+
+/* Admin actions positioned in top-right */
+.admin-actions {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  gap: 5px;
+  z-index: 10;
+}
+
+/* Buttons smaller & styled */
+.edit-product-btn,
+.delete-btn {
+  padding: 5px 10px;
+  font-size: 0.8rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  color: #fff;
+  transition: background-color 0.3s ease;
+  height: auto;
+}
+
+.edit-product-btn {
+  background-color: #28a745;
+}
+.edit-product-btn:hover {
+  background-color: #218838;
+}
+
+.delete-btn {
+  background-color: #dc3545;
+}
+.delete-btn:hover {
+  background-color: #c82333;
+}
+
+/* Ensure product container allows absolute positioning */
+.product {
+  position: relative;
+  display: flex;
+  padding: 20px;
+  margin-top: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}

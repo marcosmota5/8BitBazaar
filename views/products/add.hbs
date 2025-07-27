@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Add Product | 8 Bit Bazaar</title>
+    <meta name="description" content="Website of old products">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/style-upsert-product.css" />
+    <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+</head>
+<body>
+<header>
+    {{> header }}
+</header>
+<main class="main-content-profile">
+    <form action="/products/add" method="POST" enctype="multipart/form-data">
+        <div class="form-header">
+            <h2>Add Product</h2>
+        </div>
+
+        <div class="form-field-group">
+            <div class="form-field">
+                <label for="code">Code<span class="required">*</span></label>
+                <input class="input-box" type="text" id="code" name="code" maxlength="10" value="{{product.code}}" required>
+            </div>
+            <div class="form-field">
+                <label for="name">Name<span class="required">*</span></label>
+                <input class="input-box" type="text" id="name" name="name" maxlength="100" value="{{product.name}}" required>
+            </div>
+        </div>
+
+        <div class="form-field-group">
+            <div class="form-field">
+                <label for="type">Type<span class="required">*</span></label>
+                <input class="input-box" type="text" id="type" name="type" maxlength="100" value="{{product.type}}" required>
+            </div>
+            <div class="form-field">
+                <label for="status">Status<span class="required">*</span></label>
+                <select class="input-box" id="status" name="status" required>
+                    <option value="A" {{#if (eq product.status "A")}}selected{{/if}}>Active</option>
+                    <option value="I" {{#if (eq product.status "I")}}selected{{/if}}>Inactive</option>
+                </select>
+            </div>
+            <div class="form-field">
+                <label for="picture-path">Picture</label>
+                <div class="user-image-selector">
+                    <img id="image-preview" src="{{#if product.picturePath}}{{product.picturePath}}{{else}}/images/no-picture.png{{/if}}" alt="Image Preview">
+                    <input type="file" id="picture-path" name="picturePath" accept="image/*">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-field-group">
+            <div class="form-field">
+                <label for="price">Price<span class="required">*</span></label>
+                <input class="input-box" type="number" id="price" name="price" value="{{product.price}}" step="0.01" required>
+            </div>
+            <div class="form-field">
+                <label for="discount">Discount</label>
+                <input class="input-box" type="number" id="discount" name="discount" value="{{product.discount}}" step="0.01" required>
+            </div>
+            <div class="form-field">
+                <label for="quantity-in-stock">Quantity in stock<span class="required">*</span></label>
+                <input class="input-box" type="number" id="quantity-in-stock" name="quantityInStock" value="{{product.quantityInStock}}" required>
+            </div>
+            <div class="form-field">
+                <label for="is-deal">Is Deal</label>
+                <input class="input-box" type="checkbox" id="is-deal" name="isDeal" {{#if product.isDeal}}checked{{/if}}>
+            </div>
+            <div class="form-field">
+                <label for="is-featured">Is Featured</label>
+                <input class="input-box" type="checkbox" id="is-featured" name="isFeaturedDeal" {{#if product.isFeaturedDeal}}checked{{/if}}>
+            </div>
+        </div>
+
+        <div class="form-field-group">
+            <div class="form-field">
+                <label for="description">Description</label>
+                <textarea class="input-box" id="description" name="description" maxlength="500">{{product.description}}</textarea>
+            </div>
+        </div>
+
+        <div class="form-container">
+            <button class="submit-button" type="button" onclick="document.getElementById('submit-btn').click()">
+                <span class="material-symbols-outlined">save</span>&nbsp;Save changes
+            </button>
+            <input style="display:none" type="submit" id="submit-btn">
+        </div>
+    </form>
+
+    <footer>
+        {{> footer}}
+    </footer>
+</main>
+<script src="/js/scripts.js"></script>
+<script>
+
+    // Image preview
+    document.getElementById('picture-path').addEventListener('change', function (event) {
+        const file = event.target.files[0];
+        if (file && file.type.startsWith('image/')) {
+            const reader = new FileReader();
+            reader.onload = e => document.getElementById('image-preview').src = e.target.result;
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // Toastr flash
+    {{#if success}}
+        toastr.options.positionClass = 'toast-bottom-right';
+        toastr.success('{{success}}', 'Success');
+    {{/if}}
+    {{#if error}}
+        toastr.options.positionClass = 'toast-bottom-right';
+        toastr.error('{{error}}', 'Error');
+    {{/if}}
+</script>
+</body>
+</html>

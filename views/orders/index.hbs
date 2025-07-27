@@ -31,8 +31,10 @@
               <td>${{totalAmount}}</td>
               <td>{{recipientName}}</td>
               <td>
-                <button onclick="toggleOrderItems('{{_id}}')">View items</button>
-                <button onclick="showReceipt('{{_id}}')">View receipt</button>
+              <div class="action-buttons">
+                  <button class="view-items-btn" onclick="toggleOrderItems('{{_id}}')">View items</button>
+                  <button class="view-receipt-btn" onclick="showReceipt('{{_id}}')">View receipt</button>
+              </div>
               </td>
             </tr>
 

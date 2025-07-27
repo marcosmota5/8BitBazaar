@@ -65,7 +65,7 @@ router.post('/checkout', ensureAuth, async (req, res) => {
     const quantityArray = quantities.split(';').map(q => parseInt(q));
 
     // Fetch product details from DB
-    const products = await Product.find({ _id: { $in: productIdArray } }).lean();
+    const products = await Product.find({ _id: { $in: productIdArray } });
 
     // Map products by ID for quick lookup
     const productMap = {};
@@ -95,6 +95,15 @@ router.post('/checkout', ensureAuth, async (req, res) => {
 
     // Insert order details
     await OrderDetail.insertMany(orderDetails);
+
+    // Decrease product stock
+    for (let i = 0; i < productIdArray.length; i++) {
+      const _id = productIdArray[i];
+      const quantity = quantityArray[i];
+      await Product.findByIdAndUpdate(_id, {
+        $inc: { quantityInStock: -quantity }
+      });
+    }
 
     res.redirect(`/receipt/${order._id}?clearCart=true`);
   } catch (err) {

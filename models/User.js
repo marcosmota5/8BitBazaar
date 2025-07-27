@@ -8,6 +8,7 @@ const UserSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true }, // hashed
   registerDate: { type: Date, default: Date.now },
+  profile: { type: String, enum: ['User', 'Admin'], required: true },
   phoneNumber: String,
   picturePath: String,
   birthDate: { type: Date, required: true },

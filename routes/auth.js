@@ -44,6 +44,7 @@ router.post('/register', upload.single('profilePicture'), async (req, res) => {
       city: req.body.city,
       stateProvince: req.body.stateProvince,
       country: req.body.country,
+      profile: 'User',
       picturePath: req.file ? `/images/users/${req.file.filename}` : null
     };
     await User.create(userData);

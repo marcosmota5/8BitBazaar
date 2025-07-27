@@ -656,7 +656,7 @@ tr:last-child td:last-child {
 
 td {
     background: #FFFFFF;
-    padding: 20px;
+    padding: 10px;
     text-align: left;
     vertical-align: middle;
     font-weight: 300;
@@ -692,8 +692,28 @@ td.text-right {
     text-align: right;
 }
 
+.action-buttons {
+    justify-content: center;
+    align-items: center;
+}
 
+.view-items-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
 
+.view-receipt-btn{
+    background-color: #28a745;
+    color: white;
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
 
 
 
