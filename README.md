@@ -25,7 +25,7 @@ This is a repository of a website created for an assignment, intended for learni
 
 ## Link to Live Demo
 
-<a href="https://github.com/marcosmota5/8BitBazaar" title="Live project">To be added</a>
+<a href="https://eightbitbazaar-t9qs.onrender.com" title="Live project">To be added</a>
 
 ## Screenshots
 
