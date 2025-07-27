@@ -1,3 +1,4 @@
+// Import the required modules
 const express = require('express');
 const ensureAuth = require('../middleware/auth');
 const Order = require('../models/Order');
@@ -11,6 +12,7 @@ function generateOrderCode() {
   return 'ORD-' + Date.now(); // simple example, can make it fancier
 }
 
+// Create the provinces
 const provinces = [
   "Alberta",
   "British Columbia",
@@ -24,10 +26,12 @@ const provinces = [
   "Saskatchewan"
 ];
 
-// GET - Render checkout page
+// Get method to render checkout page
 router.get('/checkout', ensureAuth, async (req, res) => {
+  // Get the suer by id
   const user = await User.findById(req.user._id).lean();
 
+  // Render the checkout page
   res.render('checkout', {
     user,
     provinces,
@@ -37,9 +41,10 @@ router.get('/checkout', ensureAuth, async (req, res) => {
   });
 });
 
-// POST - Handle checkout form submission
+// Post method to handle checkout form submission
 router.post('/checkout', ensureAuth, async (req, res) => {
   try {
+    // Get the form data
     const {
       recipientName, phoneNumber, addressLine_1, addressLine_2,
       postalCode, country, stateProvince, city, product_ids, quantities, total
@@ -71,7 +76,7 @@ router.post('/checkout', ensureAuth, async (req, res) => {
       }
     }
 
-    // If any product doesn't have enough stock, redirect back to cart
+    // If any product doesn't have enough stock, redirect back to cart, this is necessary because another user might have purchased the product in the meantime
     if (insufficientStock) {
       req.flash('error', "One or more items don't have enough quantity in stock. Please review your cart.");
       return res.redirect('/cart');
@@ -123,11 +128,14 @@ router.post('/checkout', ensureAuth, async (req, res) => {
       });
     }
 
+    // Redirect to the receipt page passing the command to clear the cart
     res.redirect(`/receipt/${order._id}?clearCart=true`);
   } catch (err) {
+    // Print any error
     console.error(err);
     res.status(500).send('Error creating order');
   }
 });
 
+// Export the module
 module.exports = router;

@@ -1,6 +1,10 @@
+// Create the mongoose object
 const mongoose = require('mongoose');
+
+// Create the bcrypt object to handle password hashing
 const bcrypt = require('bcrypt');
 
+// Create the user schema matching the database structure
 const UserSchema = new mongoose.Schema({
   githubId: { type: String, unique: true, sparse: true },
   firstName: { type: String, required: true },
@@ -43,4 +47,5 @@ UserSchema.methods.comparePassword = async function (candidatePassword) {
   return bcrypt.compare(candidatePassword, this.password);
 };
 
+// Export the model
 module.exports = mongoose.model('User', UserSchema);

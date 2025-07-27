@@ -1,3 +1,4 @@
+// Import the required modules
 const express = require('express');
 const router = express.Router();
 const Product = require('../models/Product');
@@ -12,7 +13,7 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-// Products page
+// Get methods for the products page
 router.get('/', async (req, res) => {
   try {
     // Get the flag from query (returns string)
@@ -31,21 +32,25 @@ router.get('/', async (req, res) => {
       };
     }
 
+    // Get the products wit hthe filter
     const products = await Product.find(filter).lean();
 
+    // Render the products page with the products and checkbox state
     res.render('products/index', { 
       products, 
       showAllProducts // Pass to the view for the checkbox
     });
   } catch (err) {
+    // Log the error and send a 500 status response
     res.status(500).send('Error fetching products: ' + err.message);
   }
 });
 
-// Create (Form)
+// Get and post methods for the add operation
 router.get('/add', ensureAuth, (req, res) => res.render('products/add'));
 router.post('/add', ensureAuth, upload.single('picturePath'), async (req, res) => {
   try {
+    // Get the product data from the request body
     const {
       code,
       name,
@@ -64,6 +69,7 @@ router.post('/add', ensureAuth, upload.single('picturePath'), async (req, res) =
     // Handle image upload
     const picturePath = req.file ? '/images/products/' + req.file.filename : '/images/no-picture.png';
 
+    // Create the new product
     await Product.create({
       code,
       name,
@@ -78,22 +84,25 @@ router.post('/add', ensureAuth, upload.single('picturePath'), async (req, res) =
       picturePath
     });
 
+    // Flash the success message and redirect to the products page
     req.flash('success', 'Product added successfully!');
     res.redirect('/products');
   } catch (err) {
+    // Log the error and flash the error message
     console.error(err);
     req.flash('error', 'Error adding product: ' + err.message);
     res.redirect('/products/add');
   }
 });
 
-// Update Product
+// Get and post methods to update Product
 router.get('/edit/:id', ensureAuth, async (req, res) => {
   const product = await Product.findById(req.params.id).lean();
   res.render('products/edit', { product });
 });
 router.post('/edit/:id', ensureAuth, upload.single('picturePath'), async (req, res) => {
   try {
+    // Get the update data from the body
     const updateData = {
       ...req.body,
       price: parseFloat(req.body.price),
@@ -103,29 +112,39 @@ router.post('/edit/:id', ensureAuth, upload.single('picturePath'), async (req, r
       isFeaturedDeal: req.body.isFeaturedDeal === 'on',
     };
 
+    // Handle image upload
     if (req.file) {
       updateData.picturePath = '/images/products/' + req.file.filename;
     }
 
+    // Find the product by ID and update it
     await Product.findByIdAndUpdate(req.params.id, updateData);
+
+    // Flash the success message and redirect to the products page
     req.flash('success', 'Product updated successfully!');
     res.redirect('/products');
   } catch (err) {
+    // Log the error and flash the error message
     console.error(err);
     req.flash('error', 'Error updating product: ' + err.message);
     res.redirect(`/products/${req.params.id}/edit`);
   }
 });
 
-// Delete Product
+// Post method to delete Product
 router.post('/delete', ensureAuth, async (req, res) => {
   try {
+    // Get the product ID from the request body and delete it
     await Product.findByIdAndDelete(req.body.id);
+
+    // Flash the success message and redirect to the products page
     req.flash('success', 'Product deleted successfully!');
     res.redirect('/products');
   } catch (err) {
+    // Log the error and send a 500 status response
     res.status(500).send('Error deleting product: ' + err.message);
   }
 });
 
+// Export the module
 module.exports = router;

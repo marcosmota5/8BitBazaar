@@ -1,46 +1,50 @@
+// Import the required modules
 const express = require('express');
 const router = express.Router();
 const Order = require('../models/Order');
 const OrderDetail = require('../models/OrderDetail');
 const ensureAuth = require('../middleware/auth');
 
-// Checkout page
+// Get method for the checkout page
 router.get('/checkout', ensureAuth, (req, res) => {
-  res.render('orders/checkout'); // Form for checkout
+  res.render('orders/checkout');
 });
 
-// Handle order creation
+// Post method to handle order creation
 router.post('/checkout', ensureAuth, async (req, res) => {
   try {
-    const { items, totalAmount } = req.body; 
-    // items should be array: [{ productId, quantity, price }]
+    // Get the items and total amount from the request body
+    const { items, totalAmount } = req.body;
 
+    // Create the order
     const order = await Order.create({ user: req.user._id, totalAmount });
+    
+    // Get the details
     const details = items.map(item => ({
       order: order._id,
       product: item.productId,
       quantity: item.quantity,
       price: item.price
     }));
+
+    // Insert order details
     await OrderDetail.insertMany(details);
 
+    // Redirect to the order page with the new order ID
     res.redirect(`/orders/${order._id}`);
   } catch (err) {
+
+    // Log the error and send a 500 status response
     res.send('Error creating order: ' + err.message);
   }
 });
 
-// View single order
-router.get('/:id', ensureAuth, async (req, res) => {
-  const order = await Order.findById(req.params._id).populate('user');
-  const details = await OrderDetail.find({ order: order._id }).populate('product');
-  res.render('orders/detail', { order, details });
-});
-
-// GET /orders - show logged-in user's orders
+// Get method to show the logged-in user's orders
 router.get('/', ensureAuth, async (req, res) => {
   try {
-    const orders = await Order.find({ user: req.user._id }).sort({ order_date: -1 }).lean();
+
+    // Get the orders for the logged user
+    const orders = await Order.find({ user: req.user._id }).sort({ orderDate: -1 }).lean();
 
     // Format order dates
     orders.forEach(order => {
@@ -54,6 +58,7 @@ router.get('/', ensureAuth, async (req, res) => {
       });
     });
 
+    // Get the order ids and details
     const orderIds = orders.map(order => order._id);
     const orderDetails = await OrderDetail.find({ order: { $in: orderIds } })
       .populate('product')
@@ -68,10 +73,13 @@ router.get('/', ensureAuth, async (req, res) => {
       orderItemsByOrder[orderId].push(item);
     }
 
+    // Render the orders page wit hthe orders and items
     res.render('orders/index', { orders, orderItemsByOrder });
   } catch (err) {
+    // Log the error and send a 500 status response
     res.status(500).send('Error loading orders: ' + err.message);
   }
 });
 
+// Export the module
 module.exports = router;

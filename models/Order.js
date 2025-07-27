@@ -1,5 +1,7 @@
+// Create the mongoose object
 const mongoose = require('mongoose');
 
+// Create the order schema matching the database structure
 const OrderSchema = new mongoose.Schema({
   code: { type: String, required: true },
   orderDate: { type: Date, default: Date.now },
@@ -15,4 +17,5 @@ const OrderSchema = new mongoose.Schema({
   country: { type: String, required: true }
 }, { collection: 'Orders' });
 
+// Export the model
 module.exports = mongoose.model('Order', OrderSchema);

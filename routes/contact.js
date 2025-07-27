@@ -1,7 +1,8 @@
+// Import the required modules
 const express = require('express');
 const router = express.Router();
 
-// Show contact form
+// Get method to show the contact form
 router.get('/contact', (req, res) => {
   res.render('contact');
 });
@@ -13,8 +14,10 @@ router.post('/contact', (req, res) => {
   res.redirect('/contact-received');
 });
 
+// Get method to show the contact received page
 router.get('/contact-received', (req, res) => {
   res.render('contact-received');
 });
 
+// Export the module
 module.exports = router;
