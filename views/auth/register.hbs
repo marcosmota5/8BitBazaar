@@ -31,31 +31,31 @@
             <div class="form-field-group">
                 <div class="form-field">
                     <label for="first-name">First name<span class="required">*</span></label>
-                    <input class="input-box" type="text" id="first-name" name="firstName" maxlength="30" value="{{firstName}}" required>
+                    <input class="input-box" type="text" id="first-name" name="firstName" maxlength="30" value="{{user.firstName}}" required>
                 </div>
                 <div class="form-field">
                     <label for="last-name">Last name<span class="required">*</span></label>
-                    <input class="input-box" type="text" id="last-name" name="lastName" maxlength="30" value="{{lastName}}" required>
+                    <input class="input-box" type="text" id="last-name" name="lastName" maxlength="30" value="{{user.lastName}}" required>
                 </div>
             </div>
 
             <div class="form-field-group">
                 <div class="form-field">
                     <label for="birth-date">Birth date<span class="required">*</span></label>
-                    <input class="input-box" type="date" id="birth-date" name="birthDate" min="1900-01-01" value="{{birthDate}}" required>
+                    <input class="input-box" type="date" id="birth-date" name="birthDate" min="1900-01-01" value="{{user.birthDate}}" required>
                 </div>
                 <div class="form-field">
                     <label for="sex">Sex<span class="required">*</span></label>
                     <select class="input-box" id="sex" name="sex" required>
-                        <option value="M" {{#if (eq sex "M")}}selected{{/if}}>Male</option>
-                        <option value="F" {{#if (eq sex "F")}}selected{{/if}}>Female</option>
-                        <option value="N" {{#if (eq sex "N")}}selected{{/if}}>Not declared</option>
+                        <option value="M" {{#if (eq user.sex "M")}}selected{{/if}}>Male</option>
+                        <option value="F" {{#if (eq user.sex "F")}}selected{{/if}}>Female</option>
+                        <option value="N" {{#if (eq user.sex "N")}}selected{{/if}}>Not declared</option>
                     </select>
                 </div>
                 <div class="form-field">
                     <label for="profile-picture">Profile picture</label>
                     <div class="user-image-selector">
-                        <img id="image-preview" src="/images/users/no-picture.png" alt="Image Preview">
+                        <img id="image-preview" src="{{#if user.picturePath}}{{user.picturePath}}{{else}}/images/users/no-picture.png{{/if}}" alt="Image Preview">
                         <input type="file" id="profile-picture" name="profilePicture" accept="image/*">
                     </div>
                 </div>
@@ -64,29 +64,29 @@
             <div class="form-field-group">
                 <div class="form-field">
                     <label for="phone-number">Phone Number<span class="required">*</span></label>
-                    <input class="input-box" type="tel" id="phone-number" name="phoneNumber" maxlength="20" value="{{phoneNumber}}" required>
+                    <input class="input-box" type="tel" id="phone-number" name="phoneNumber" maxlength="20" value="{{user.phoneNumber}}" required>
                 </div>
                 <div class="form-field">
                     <label for="email">Email<span class="required">*</span></label>
-                    <input class="input-box" type="email" id="email" name="email" maxlength="50" value="{{email}}" required>
+                    <input class="input-box" type="email" id="email" name="email" maxlength="50" value="{{user.email}}" required>
                 </div>
             </div>
 
             <div class="form-field-group">
                 <div class="form-field">
                     <label for="address-line-1">Address line 1<span class="required">*</span></label>
-                    <input class="input-box" type="text" id="address-line-1" name="addressLine_1" maxlength="100" value="{{addressLine1}}" required>
+                    <input class="input-box" type="text" id="address-line-1" name="addressLine_1" maxlength="100" value="{{user.addressLine_1}}" required>
                 </div>
             </div>
 
             <div class="form-field-group">
                 <div class="form-field">
                     <label for="address-line-2">Address line 2</label>
-                    <input class="input-box" type="text" id="address-line-2" name="addressLine_2" maxlength="100" value="{{addressLine2}}">
+                    <input class="input-box" type="text" id="address-line-2" name="addressLine_2" maxlength="100" value="{{user.addressLine_2}}">
                 </div>
                 <div class="form-field">
                     <label for="postal-code">Postal Code<span class="required">*</span></label>
-                    <input class="input-box" type="text" id="postal-code" name="postalCode" maxlength="20" value="{{postalCode}}" required>
+                    <input class="input-box" type="text" id="postal-code" name="postalCode" maxlength="20" value="{{user.postalCode}}" required>
                 </div>
             </div>
 
@@ -94,20 +94,20 @@
                 <div class="form-field">
                     <label for="country">Country<span class="required">*</span></label>
                     <select class="input-box" id="country" name="country" required>
-                        <option value="Canada" selected>Canada</option>
+                        <option value="Canada" {{#if (eq user.country "Canada")}}selected{{/if}}>Canada</option>
                     </select>
                 </div>
                 <div class="form-field">
                     <label for="province">Province<span class="required">*</span></label>
                     <select class="input-box" id="province" name="stateProvince" required>
                         {{#each provinces}}
-                            <option value="{{this}}" {{#if (eq ../stateProvince this)}}selected{{/if}}>{{this}}</option>
+                            <option value="{{this}}" {{#if (eq ../user.stateProvince this)}}selected{{/if}}>{{this}}</option>
                         {{/each}}
                     </select>
                 </div>
                 <div class="form-field">
                     <label for="city">City<span class="required">*</span></label>
-                    <input class="input-box" type="text" id="city" name="city" value="{{city}}" required>
+                    <input class="input-box" type="text" id="city" name="city" value="{{user.city}}" required>
                 </div>
             </div>
 
@@ -121,14 +121,6 @@
                     <input class="input-box" type="password" id="confirm-password" name="confirmPassword" maxlength="32" required>
                 </div>
             </div>
-
-            {{#if error}}
-            <div class="form-field-group">
-                <div class="error-message">
-                    <strong>Error to register user:<br><br></strong>{{error}}
-                </div>
-            </div>
-            {{/if}}
 
             <div class="form-container">
                 <button class="submit-button" type="submit">
@@ -163,6 +155,15 @@
                 event.target.value = '';
             }
         });
+
+        {{#if successMessage}}
+            toastr.options.positionClass = 'toast-bottom-right';
+            toastr.success('{{successMessage}}', 'Success');
+        {{/if}}
+        {{#if errorMessages}}
+            toastr.options.positionClass = 'toast-bottom-right';
+            toastr.error('{{errorMessages}}', 'Error');
+        {{/if}}
     </script>
 </body>
 </html>

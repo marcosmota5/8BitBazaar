@@ -190,6 +190,15 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    var closeButton = document.getElementById('close-button');
+    // Close the popup when the close button is clicked
+    if (closeButton != null) {
+        closeButton.addEventListener('click', function(event) {
+            event.preventDefault();
+            userProfilePopup.classList.remove('show');
+        });
+    }
+
     // Close the popup if the user clicks outside of it
     //window.addEventListener('click', function(event) {
     //    if (!signInUpBtn.contains(event.target) && !popup.contains(event.target)) {

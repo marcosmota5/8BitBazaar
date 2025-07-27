@@ -67,5 +67,15 @@
         clearCart();
     </script>
   {{/if}}
+  <script>
+  {{#if successMessage}}
+      toastr.options.positionClass = 'toast-bottom-right';
+      toastr.success('{{successMessage}}', 'Success');
+  {{/if}}
+  {{#if errorMessages}}
+      toastr.options.positionClass = 'toast-bottom-right';
+      toastr.error('{{errorMessages}}', 'Error');
+  {{/if}}
+  </script>
 </body>
 </html>

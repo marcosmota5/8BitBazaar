@@ -507,11 +507,19 @@ footer {
     top: 100%;
 }
 
-.profile-and-logout {
+.profile-and-close-button {
     display: flex;
     flex-direction: row;
     margin-bottom: 10px;
     justify-content: space-between;
+    align-items: center;
+}
+
+.change-password {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+        justify-content: space-between;
     align-items: center;
 }
 
@@ -537,6 +545,12 @@ footer {
     flex-direction: column;
     justify-content: space-between;
     margin: 10px 0;
+    font-size: small;
+    min-width: 260px;
+}
+
+.icon-and-text {
+    vertical-align: middle;
 }
 
 /* Style the links inside the popup */
@@ -569,12 +583,6 @@ footer {
 
 .user-popup-content a:hover {
     color: #2c65a7;
-}
-
-.change-password {
-    display: flex;
-    flex-direction: row;
-    margin-top: 10px;
 }
 
 /* Style for when the popup is shown */
@@ -756,9 +764,21 @@ td.text-right {
         flex-direction: column;
     }
 
+    .user-mini-info {
+        width: 100%;
+    }
+
     .cart-text,
     .user-mini-info-text {
         display: none;
+    }
+
+    .cards {
+        flex-direction: column;
+    }
+
+    .description2 {
+        margin: 10px;
     }
 
     .company-name {
@@ -768,6 +788,11 @@ td.text-right {
     .user-popup-content {
         right: -90%;
         top: 100%;
+    }
+
+    .details {
+        min-width: 0px;
+        max-width: 180px;
     }
 
     .options {

@@ -16,35 +16,25 @@ router.post('/change-password', ensureAuth, async (req, res) => {
 
   try {
     const user = await User.findById(req.user._id);
-    if (!user) {
-      return res.redirect('/login');
-    }
+    if (!user) return res.redirect('/login');
 
-    // Check current password
     const match = await user.comparePassword(currentPassword);
-    if (!match) {
-      errors.push("Current password is incorrect.");
-    }
+    if (!match) errors.push("Current password is incorrect.");
+    if (newPassword !== confirmPassword) errors.push("New password and confirmation do not match.");
+    if (errors.length > 0) return res.render('change-password', { errorMessages: errors.join('<br>'), successMessage: null });
 
-    // Check new password matches confirm
-    if (newPassword !== confirmPassword) {
-      errors.push("New password and confirmation do not match.");
-    }
+    const salt = await bcrypt.genSalt(10);
 
-    // If errors, show them
-    if (errors.length > 0) {
-      return res.render('change-password', { errorMessages: errors.join('<br>'), successMessage: null });
-    }
+    // Hash the new password manually
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
 
-    // Update password
-    user.password = newPassword; // This will automatically hash the password due to the pre-save hook in User model
-    await user.save();
+    // Directly update only the password
+    await User.updateOne({ _id: req.user._id }, { $set: { password: hashedPassword } });
 
     return res.render('change-password', { successMessage: "Password successfully changed!", errorMessages: null });
-
   } catch (err) {
     console.error(err);
-    return res.render('change-password', { errorMessages: "Unexpected error. Try again later.", successMessage: null });
+    return res.render('change-password', { errorMessages: "Unexpected error. Details: " + err.message, successMessage: null });
   }
 });
 

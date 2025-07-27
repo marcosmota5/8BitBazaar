@@ -8,6 +8,11 @@
     <link rel="stylesheet" href="/css/style-register.css" />
     <link rel="shortcut icon" href="/images/favicon.png" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+    integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+    crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 </head>
 <body>
     <header>
@@ -52,7 +57,7 @@
             </div>
         </form>
 
-        <div class="form-container" style="margin-top: 20px;">
+        <div class="form-container" style="margin-top: 20px; margin-bottom: 20px;">
             <a class="submit-button" style="background-color:#24292f" href="/auth/github">
                 <span class="material-symbols-outlined">code</span>&nbsp;Login with GitHub
             </a>
@@ -63,5 +68,16 @@
         </footer>
     </main>
     <script src="/js/scripts.js"></script>
+    <script>
+        // Toastr flash
+        {{#if successMessage}}
+            toastr.options.positionClass = 'toast-bottom-right';
+            toastr.success('{{successMessage}}', 'Success');
+        {{/if}}
+        {{#if errorMessages}}
+            toastr.options.positionClass = 'toast-bottom-right';
+            toastr.error('{{errorMessages}}', 'Error');
+        {{/if}}
+    </script>
 </body>
 </html>

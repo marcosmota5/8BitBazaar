@@ -35,7 +35,6 @@ router.get('/', async (req, res) => {
 
     res.render('products/index', { 
       products, 
-      toastrMessage: req.flash('success'), 
       showAllProducts // Pass to the view for the checkbox
     });
   } catch (err) {
@@ -122,6 +121,7 @@ router.post('/edit/:id', ensureAuth, upload.single('picturePath'), async (req, r
 router.post('/delete', ensureAuth, async (req, res) => {
   try {
     await Product.findByIdAndDelete(req.body.id);
+    req.flash('success', 'Product deleted successfully!');
     res.redirect('/products');
   } catch (err) {
     res.status(500).send('Error deleting product: ' + err.message);

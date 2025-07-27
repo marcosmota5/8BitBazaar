@@ -12,8 +12,6 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-// Register page
-router.get('/register', (req, res) => {
   const provinces = [
     'Alberta',
     'British Columbia',
@@ -26,6 +24,9 @@ router.get('/register', (req, res) => {
     'Quebec',
     'Saskatchewan'
   ];
+
+// Register page
+router.get('/register', (req, res) => {
   res.render('auth/register', { provinces });
 });
 router.post('/register', upload.single('profilePicture'), async (req, res) => {
@@ -48,31 +49,51 @@ router.post('/register', upload.single('profilePicture'), async (req, res) => {
       picturePath: req.file ? `/images/users/${req.file.filename}` : null
     };
     await User.create(userData);
+    req.flash('success', 'User successfully registered. Please login.');
     res.redirect('/login');
   } catch (err) {
-    //console.error(err);
-    res.send('Error registering: ' + err.message);
+    console.error(err);
+
+    // If there was a file uploaded, keep its path in the user object
+    if (req.file) {
+      req.body.picturePath = `/images/users/${req.file.filename}`;
+    }
+
+    // Re-render the register page with error messages
+    res.render('auth/register', { 
+      errorMessages: 'Error registering: ' + err.message, 
+      successMessage: null,
+      user: req.body,
+      provinces: provinces
+    });
   }
 });
 
 router.get('/login', (req, res) => {
-  res.render('auth/login', { error: req.flash('error') });
+  res.render('auth/login');
 });
 
 // POST login with flash error messages
-router.post('/login',
-  passport.authenticate('local', {
-    failureRedirect: '/login',
-    failureFlash: 'Invalid email or password'
-  }),
-  (req, res) => {
-    res.redirect('/'); // redirect after successful login
-  }
-);
+router.post('/login', (req, res, next) => {
+  passport.authenticate('local', (err, user, info) => {
+    if (err) return next(err);
+    if (!user) {
+      req.flash('error', 'Invalid email or password');
+      return res.redirect('/login');
+    }
+
+    req.logIn(user, (err) => {
+      if (err) return next(err);
+      req.flash('success', 'Login successful!');
+      res.redirect('/');
+    });
+  })(req, res, next);
+});
 
 // Logout
 router.get('/logout', (req, res) => {
   req.logout(() => {
+    req.flash('success', 'Logout successful!');
     res.redirect('/');
   });
 });
@@ -81,7 +102,10 @@ router.get('/logout', (req, res) => {
 router.get('/auth/github', passport.authenticate('github', { scope: [ 'user:email' ] }));
 router.get('/auth/github/callback',
   passport.authenticate('github', { failureRedirect: '/login' }),
-  (req, res) => res.redirect('/products')
+  (req, res) => {
+    req.flash('success', 'Logged with GitHub successful!');
+    res.redirect('/'); // redirect after successful login
+  }
 );
 
 // Profile page
@@ -113,7 +137,7 @@ router.get('/profile', (req, res) => {
 router.post('/profile', upload.single('profilePicture'), async (req, res) => {
   if (!req.isAuthenticated()) return res.redirect('/login');
   try {
-   const updateData = {
+    const updateData = {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       sex: req.body.sex,
@@ -127,31 +151,21 @@ router.post('/profile', upload.single('profilePicture'), async (req, res) => {
       city: req.body.city,
       stateProvince: req.body.stateProvince,
       country: req.body.country,
-      picturePath: req.file ? `/images/users/${req.file.filename}` : null
     };
-    if (req.file) updateData.picturePath = `/images/users/${req.file.filename}`;
+
+    // Preserve existing picture if no new one is uploaded
+    updateData.picturePath = req.file
+      ? `/images/users/${req.file.filename}`
+      : req.body.existingPicturePath; 
+
     await User.findByIdAndUpdate(req.user._id, updateData);
     req.flash('success', 'Profile updated successfully!');
     res.redirect('/profile');
   } catch (err) {
     console.error(err);
-    req.flash('error', 'Error updating profile.');
+    req.flash('error', 'Error updating profile: ' + err.message);
     res.redirect('/profile');
   }
 });
-
-// Change password
-router.post('/profile/password', async (req, res) => {
-  try {
-    const { password } = req.body;
-    const user = await User.findById(req.user._id);
-    user.password = password; // will trigger hash in pre-save
-    await user.save();
-    res.redirect('/profile');
-  } catch (err) {
-    res.send('Error changing password: ' + err.message);
-  }
-});
-
 
 module.exports = router;

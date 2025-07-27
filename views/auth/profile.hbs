@@ -53,6 +53,7 @@
                 <div class="user-image-selector">
                     <img id="image-preview" src="{{#if user.picturePath}}{{user.picturePath}}{{else}}/images/users/no-picture.png{{/if}}" alt="Image Preview">
                     <input type="file" id="profile-picture" name="profilePicture" accept="image/*">
+                    <input type="hidden" name="existingPicturePath" value="{{user.picturePath}}">
                 </div>
             </div>
         </div>
@@ -139,14 +140,13 @@
         }
     });
 
-    // Toastr flash
-    {{#if success}}
+    {{#if successMessage}}
         toastr.options.positionClass = 'toast-bottom-right';
-        toastr.success('{{success}}', 'Success');
+        toastr.success('{{successMessage}}', 'Success');
     {{/if}}
-    {{#if error}}
+    {{#if errorMessages}}
         toastr.options.positionClass = 'toast-bottom-right';
-        toastr.error('{{error}}', 'Error');
+        toastr.error('{{errorMessages}}', 'Error');
     {{/if}}
 </script>
 </body>

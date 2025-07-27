@@ -16,10 +16,10 @@ router.get('/', async (req, res) => {
       isFeaturedDeal: 1
     }).lean();
 
-    res.render('index', { products: products });
+    res.render('index', { products });
   } catch (err) {
     console.error(err);
-    res.status(500).send('Error loading deals');
+    res.status(500).send('Error loading main page');
   }
 });
 

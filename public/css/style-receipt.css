@@ -6,7 +6,7 @@
     border-radius: 5px;
     padding: 20px;
     margin: 0 auto;
-    margin-top: 200px;
+
     max-width: 600px;
     font-family: Arial, sans-serif;
   }
@@ -50,10 +50,10 @@
   }
   
   .main-content-receipt {
-    display: flex;
+
     justify-content: center;
     align-items: center;
-    flex-direction: column;
+
     height: 85vh;
   }
   

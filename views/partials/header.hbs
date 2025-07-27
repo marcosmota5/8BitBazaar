@@ -27,22 +27,32 @@
                     <span class="material-symbols-outlined">arrow_drop_down</span>
                 </a>
                 <div id="user-popup" class="user-popup-content">
-                    <div class="profile-and-logout">
+                    <div class="profile-and-close-button">
                         <a href="/profile"><span class="material-symbols-outlined">user_attributes</span>&nbsp;My profile</a>
-                        <a href="/logout" class="logout-popup-button"><span class="material-symbols-outlined">logout</span><span>&nbsp;Logout</span></a>
+                        <a href="#" id="close-button"><span class="material-symbols-outlined">close</span></a>
                     </div>
                     <div class="picture-and-details">
                         <div class="picture">
                             <img src="{{#if currentUser.picturePath}}{{currentUser.picturePath}}{{else}}/images/users/no-picture.png{{/if}}" alt="User Picture">
                         </div>
                         <div class="details">
-                            <div><span class="material-symbols-outlined">person</span>&nbsp;{{currentUser.firstName}} {{currentUser.lastName}}</div>
-                            <div><span class="material-symbols-outlined">phone</span>&nbsp;{{currentUser.phoneNumber}}</div>
-                            <div><span class="material-symbols-outlined">email</span>&nbsp;{{currentUser.email}}</div>
+                            <div class="icon-and-text">
+                                <span class="material-symbols-outlined">person</span>&nbsp;
+                                {{truncateWithTooltip (concat currentUser.firstName " " currentUser.lastName) 30}}
+                            </div>
+                            <div class="icon-and-text">
+                                <span class="material-symbols-outlined">phone</span>&nbsp;
+                                {{truncateWithTooltip currentUser.phoneNumber 30}}
+                            </div>
+                            <div class="icon-and-text">
+                                <span class="material-symbols-outlined">email</span>&nbsp;
+                                {{truncateWithTooltip currentUser.email 30}}
+                            </div>
                         </div>
                     </div>
                     <div class="change-password">
                         <a href="/change-password"><span class="material-symbols-outlined">lock_reset</span>&nbsp;Change password</a>
+                        <a href="/logout" class="logout-popup-button"><span class="material-symbols-outlined">logout</span><span>&nbsp;Logout</span></a>
                     </div>
                 </div>
             </div>

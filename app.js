@@ -43,6 +43,23 @@ hbs.registerHelper('calcDiscount', (price, discount) => {
   return (price * (1 - discount)).toFixed(2);
 });
 
+hbs.registerHelper('concat', function (...args) {
+  // Remove the last argument (Handlebars options object)
+  args.pop();
+  return args.join(' ');
+});
+
+hbs.registerHelper('truncateWithTooltip', function (text, length) {
+  if (!text) return '';
+  const str = text.toString();
+  if (str.length > length) {
+    return new hbs.SafeString(
+      `<span title="${str}">${str.substring(0, length)}[...]</span>`
+    );
+  }
+  return new hbs.SafeString(`<span title="${str}">${str}</span>`);
+});
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -60,14 +77,11 @@ app.use(passport.session());
 
 const flash = require('connect-flash');
 app.use(flash());
-app.use((req, res, next) => {
-  res.locals.error = req.flash('error');
-  res.locals.success = req.flash('success');
-  next();
-});
 
 app.use((req, res, next) => {
   res.locals.currentUser = req.user || null;
+  res.locals.successMessage = req.flash('success')[0] || null;
+  res.locals.errorMessages = req.flash('error')[0] || null;
   next();
 });
 
