@@ -27,6 +27,10 @@ This is a repository of a website created for an assignment, intended for learni
 
 <a href="https://eightbitbazaar-t9qs.onrender.com" title="Live project">https://eightbitbazaar-t9qs.onrender.com</a>
 
+## Presentation
+
+<a href="./Term Project - Presentation.pptx" title="Presentation">PowerPoint Presentation</a>
+
 ## Screenshots
 
 ### Home page
